@@ -1,0 +1,27 @@
+::ng-deep .mat-card-header{
+  background-color: #e1f5fe;
+  padding:5px !important;
+  border-right: 1px solid dimgray;
+  border-bottom: 1px solid dimgray;
+  /*height: 60px;*/
+}
+
+.mat-card-header-text {
+  /*width: 100%;*/
+}
+
+::ng-deep .mat-card {
+  /*width: 600px;*/
+  border-right: 1px solid dimgray;
+  border-bottom: 1px solid dimgray;
+}
+
+::ng-deep .mat-card-content{
+  padding:5px !important;
+}
+
+::ng-dep .mat-card-title {
+  margin-left:-8px;
+  border-right: 1px solid dimgray;
+  border-bottom: 1px solid dimgray;
+}
