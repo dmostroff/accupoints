@@ -10,7 +10,7 @@
       <div fxFlex fxFlexAlign="start">Ostroff Enterprises</div>
       <div fxFlex fxFlexFill></div>
       <div fxFlex fxFlexOffset="150px">
-        <div *ngIf="!isValidUser">
+        <div *ngIf="!isValidUser || !inLogin">
           <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper">Login</a>
         </div>
         <div *ngIf="isValidUser" class="mat-h4" >
@@ -27,6 +27,7 @@
         <!--<a routerLink="aboutus" routerLinkActive="active" >About</a>-->
       </div>
       <div fxFlexFill fxFlex="30px"></div>
+      <div fxFlex fxFlexAlign="end"><span class="caption">{{ version }}</span></div>
       <!--<li class="list-item"><a routerLink="aboutus" routerLinkActive="active">About</a></li>-->
       <!--<li class="list-item"><a routerLink="clients/address" routerLinkActive="active">Address</a></li>-->
       <!--<li class="list-item"><a routerLink="clients/person" routerLinkActive="active">Person</a></li>-->
@@ -47,7 +48,10 @@
     </a>
   </div>
 </nav>
-<div fxLayout fxLayoutAlign="center center" style="padding-top: 40px;border-top: 2px solid slategrey">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+<div fxFlex class="mainPanel">
   <router-outlet></router-outlet>
+  <app-login *ngIf="!isValidUser && !inLogin"></app-login>
+</div>
 </div>
 

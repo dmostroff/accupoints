@@ -1,0 +1,64 @@
+
+<h2 fxFlexAlign="center">{{dataSource.dataLength}} Clients</h2>
+<div fxFlexAlign="center" [style.display]="(dataSource.renderedData.length == 0) ? 'none' : 'block'" class="clientAccountListTable">
+
+  <mat-paginator #paginator
+                 [length]="dataSource.dataLength"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="pageEvent = getServerData($event)"
+  >
+  </mat-paginator>
+  <div class="example-container mat-elevation-z8" fxLayout="row" fxLayoutGap="8px" fxLayoutAling="start stretch" style="width: 95%;">
+    <mat-table #table1 [dataSource]="dataSource"
+               selectable-rows="true"
+               multi-selection="false"
+               select-on-rowclick="true"
+               clicked-row-callback="showClientAccount(x);"
+               matSort
+    >
+      <ng-container cdkColumnDef="account_id">
+        <mat-header-cell *cdkHeaderCellDef fxFlex="5%">Id</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="5%">{{row.account_id}}
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="client_name">
+        <mat-header-cell *cdkHeaderCellDef fxFlex>Client Name</mat-header-cell>
+        <!--<mat-cell *cdkCellDef="let row" fxFlex="grow"><a [routerLink]="['/clients/person/'+row.client_id]">{{row.last_name}}</a></mat-cell>-->
+        <mat-cell *cdkCellDef="let row" fxFlex="grow" (click)="showDetail(row)">{{row.last_name}} {{row.first_name}}</mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="name">
+        <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Name on Card</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="15%">{{row.name}}</mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="card_name">
+        <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Card</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="15%">{{row.card_name}}</mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="account_num">
+        <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Name on Card</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="15%">{{row.account_num}}</mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="recorded_on">
+        <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Recorded</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="15%">{{row.recorded_on | date }}</mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="edit">
+        <mat-header-cell *cdkHeaderCellDef fxFlex="15%"  style="border: 2px solid green;" fxFlexAlign="end">Edit</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" (click)="openDialog(row)" fxFlex="15%" fxFlexAlign="end" fxFlexFill  style="border: 2px solid orange;">
+          <button mat-icon-button ><mat-icon fxFlexAlign="start">edit</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+      <!--(click)="getPerson(row)"-->
+    </mat-table>
+
+    <div class="example-no-results"
+         [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+      No users found matching filter.
+    </div>
+  </div>
+</div>
+

@@ -16,7 +16,7 @@ import { PersonDlgComponent } from './person-dlg.component';
   templateUrl: './clients-list.component.html',
   styleUrls: ['./clients-list.component.css']
 })
-export class PersonsListComponent implements OnInit {
+export class ClientsListComponent implements OnInit {
   displayedColumns = ['client_id', 'last_name', 'first_name', 'recorded_on', 'edit'];
   //persons: ClientPerson[];
   dataSource: ClientPersonDataSource;
@@ -26,10 +26,7 @@ export class PersonsListComponent implements OnInit {
   showPersonEdit: boolean;
 
   clientsList: ClientPerson[];
-  clientsListSubscription: Subscription;
-
   person: ClientPerson;
-  personSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   //@ViewChild(MatSort) sort: MatSort;

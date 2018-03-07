@@ -30,12 +30,14 @@ export class LoginComponent implements OnInit {
   admUser: AdmUser;
   bSuccess: boolean;
   msg: string;
+  inLogin: boolean;
 
 
   constructor(private fb:FormBuilder
     , private admUsersService: AdmUsersService
     , private authService: AuthService
     , private router: Router ) {
+      this.inLogin = true;
       this.bSuccess = false;
       this.admUser = admUsersService.admUser;
       this.loginFormLoginControl = new FormControl(this.admUser.login, [Validators.required]);
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.admUsersService.admUserSubject.subscribe(result => {
       console.log(result);
       this.admUser.set(result);
@@ -58,7 +61,8 @@ export class LoginComponent implements OnInit {
           this.bSuccess = true;
           this.msg = this.admUser.user_name + ' successfully logged in';
           let timeoutId = setTimeout(() => {
-            this.router.navigate(['clientlist']); // clients/accounts']);
+            this.inLogin = false;
+            this.router.navigateByUrl('/clients/list'); // clients/accounts']);
           }, 1500);
         } else {
           this.bSuccess = false;
@@ -83,6 +87,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.msg = 'Submittted';
       console.log('login call');
+      this.inLogin = false;
       this.admUsersService.login(this.loginForm.value);
     }
   }

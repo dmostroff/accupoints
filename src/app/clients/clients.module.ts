@@ -7,27 +7,23 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../utils/token-interceptor';
 
 import { ClientsService } from './clients.service';
-import { ClientAccountsService } from './client-accounts.service';
+import { ClientAccountService } from './client-account.service.ts';
 
-import { ClientsRoutingModule } from './clients-routing.module';
-import { PersonsListComponent } from './persons/clients-list.component';
+import { ClientsListComponent } from './persons/clients-list.component';
 import { PersonsComponent } from './persons/persons.component';
 import { PersonDlgComponent } from './persons/person-dlg.component';
 import { ClientAddressDlgComponent } from './persons/client-address-dlg.component';
 import { ClientAddressComponent } from './persons/client-address.component';
 
+import { ClientAccountListComponent } from './accounts/client-account-list.component';
+
+
 @NgModule({
   imports: [
     CommonModule
     , AppMaterialModule
-    , ClientsRoutingModule
   ],
-  declarations: [PersonsListComponent, PersonsComponent, PersonDlgComponent, ClientAddressDlgComponent, ClientAddressComponent],
-  providers: [ ClientsService, ClientAccountsService
-    , {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    } ]
+  declarations: [ClientsListComponent, PersonsComponent, PersonDlgComponent, ClientAddressDlgComponent, ClientAddressComponent, ClientAccountListComponent ],
+  providers: [ ClientsService, ClientAccountService]
 })
 export class ClientsModule { }

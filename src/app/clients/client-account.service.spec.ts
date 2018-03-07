@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ClientAccountsService } from './client-accounts.service';
+import { ClientAccountsService } from './client-account.service.ts';
 
 describe('ClientAccountsService', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component,  ViewChild, AfterViewInit  } from '@angular/core';
 import { MatTabsModule} from '@angular/material'
 import { AdmUser} from './adm/adm-users';
 import { LoginComponent } from './adm/login.component';
@@ -13,12 +13,16 @@ import { AuthService } from './utils/auth.service';
   styleUrls: ['./app.component.css'],
 })
 
-export class AppComponent {
-  title = 'AccuPoints';
+export class AppComponent implements AfterViewInit  {
+  title: String = "AquiPoints";
+  version: String = "1.01";
   admUser: AdmUser;
   navLinks: any[];
   validToken: boolean;
   isValidUser: boolean;
+  inLogin: boolean;
+
+  @ViewChild(LoginComponent) loginchild;
 
   constructor(
     private admUsersService: AdmUsersService
@@ -28,10 +32,8 @@ export class AppComponent {
     this.isValidUser = false;
     this.navLinks = [
       { path: "cc/companylist", label: "CCard Companies", active: true }
-      , { path: "clients/persons", label: "Clients", active: true}
+      , { path: "clients/list", label: "Clients", active: true}
       , { path: "clients/accounts", label: "Accounts", active: true }
-      , { path: "/login", label: "Login", active: true }
-      , { path: "/logout", label: "Logout", active: true }
     ];
     admUsersService.admUserSubject.subscribe( admUser => {
       this.isValidUser = (admUser && admUser.token) ? true : false;
@@ -39,6 +41,11 @@ export class AppComponent {
       this.authService.setValidUser(this.isValidUser );
       console.log(this.isValidUser);
     })
+  }
+
+  ngAfterViewInit() {
+    this.inLogin = this.loginchild.inLogin;
+    console.log(this.inLogin);
   }
 
   logout() {

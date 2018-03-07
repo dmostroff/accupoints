@@ -46,7 +46,7 @@ import { AdmUsersService } from './adm/adm-users.service';
     AccNumberMaskPipe,
     ZipcodePipe,
     PhonefmtPipe,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
