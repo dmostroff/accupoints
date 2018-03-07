@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { ClientAccount } from '../client-account';
-import { ClientAccountService } from '../client-account.service.ts'
+import { ClientAccountService } from '../client-account.service';
 
 @Component({
   selector: 'app-client-account-list',
@@ -66,7 +66,7 @@ export class ClientAccountDataSource extends DataSource<any> {
 
   filteredData: ClientAccount[] = [];
   renderedData: ClientAccount[] = [];
-  dataLength: Number;
+  dataLength: number;
 
   constructor(
     private _accountService: ClientAccountService
