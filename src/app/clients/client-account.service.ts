@@ -5,7 +5,8 @@ import {Subject} from 'rxjs/Subject';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import { Config } from './../utils/config';
-import {CcapiResult} from './../utils/ccapiresult';
+import { CcapiResult } from './../utils/ccapiresult';
+import { AuthService } from './../utils/auth.service';
 import { ClientAccount } from './client-account';
 
 @Injectable()
@@ -22,7 +23,8 @@ export class ClientAccountService {
   clientAccount:ClientAccount;
   public clientAccountSubject:BehaviorSubject<ClientAccount> = new BehaviorSubject<ClientAccount>(new ClientAccount());
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient
+    , private authService:AuthService) {
     this.apiUrl = 'http://ccapi.com//client/accounts';
     this.clientAccount = new ClientAccount();
     this.clientAccountsPerson = <ClientAccount[]>[];
@@ -31,24 +33,16 @@ export class ClientAccountService {
 
 
   public getClientAccounts() {
-    let url = Config.GetUrl( 'client/accounts');
-    if (!url) {
-      return null;
-    }
-    return this.http.get<CcapiResult>(url)
-      .subscribe(
-        resdata => {
-          console.log(["ClientAccountService.getclientAccountList", resdata]);
-          if (resdata) {
-            if (resdata.res.rc != 0) {
-              this.clientAccountListSubject.next(null);
-            } else {
-              if (resdata.data && resdata.data.length > 0) {
-                this.clientAccountList = resdata.data;
-                console.log(this.clientAccountList);
-                this.clientAccountListSubject.next(this.clientAccountList);
-              }
-            }
+    let url = Config.GetUrl('client/accounts');
+    return this.http.get<CcapiResult>(url
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            this.clientAccountList = resp.data;
+            console.log(this.clientAccountList);
+            this.clientAccountListSubject.next(this.clientAccountList);
           }
         }
         , (err:HttpErrorResponse) => {
@@ -77,35 +71,34 @@ export class ClientAccountService {
   }
 
   public getClientAccountsPerson(client_id) {
-    let url = Config.GetUrl( 'client/accounts/person/' + client_id);
-    return this.http.get<CcapiResult>(url)
-      .subscribe(
-        resdata => {
-          if (resdata.res.rc != 0) {
-            this.clientAccountsPersonSubject.next(null);
-          } else {
-            this.clientAccountsPerson = resdata.data;
+    let url = Config.GetUrl('client/accounts/person/' + client_id);
+    return this.http.get<CcapiResult>(url
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            this.clientAccountsPerson = resp.data;
             console.log(["ClientAccountService.getClientAccountsPerson", this.clientAccountsPerson, this.clientAccountsPerson.length]);
             this.clientAccountsPersonSubject.next(this.clientAccountsPerson);
           }
         }
         , err => {
           console.log(err);
-          this.clientAccountListSubject.next(-1);
+          this.clientAccountListSubject.next(null);
         }
       );
   }
 
   public getClientAccount(account_id) {
-    let url = Config.GetUrl( 'client/accounts/' + account_id);
-    return this.http.get<CcapiResult>(this.apiUrl)
-      .subscribe(
-        resdata => {
-          console.log([resdata, 'getClientAccount']);
-          if (resdata.res.rc != 0) {
-            this.clientAccountSubject.next(null);
-          } else {
-            this.clientAccount = resdata.data;
+    let url = Config.GetUrl('client/accounts/' + account_id);
+    return this.http.get<CcapiResult>(url
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            this.clientAccount = resp.data;
             console.log(["ClientAccountService.getClientAccount", this.clientAccount]);
             this.clientAccountSubject.next(this.clientAccount);
           }
@@ -118,20 +111,18 @@ export class ClientAccountService {
 
 
   public postClientAccount(input) {
-    let url = Config.GetUrl( 'client/accounts');
-    return this.http.post<CcapiResult>(url, input)
-      .subscribe(
-        resdata => {
-          if (resdata.res.rc != 0) {
-            this.clientAccountSubject.next(null);
+    let url = Config.GetUrl('client/accounts');
+    return this.http.post<CcapiResult>(url, input
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            this.clientAccount.set(resp.data);
+            console.log(["1-postClientAccount", this.clientAccount]);
+            this.clientAccountSubject.next(this.clientAccount);
           } else {
-            if (resdata.data) {
-              this.clientAccount.set(resdata.data);
-              console.log(["1-postClientAccount", this.clientAccount]);
-              this.clientAccountSubject.next(this.clientAccount);
-            } else {
-              console.log(["resdata is null for ", resdata, input]);
-            }
+            console.log(["resdata is null for ", resp.data, input]);
           }
         }
         , err => {
@@ -141,21 +132,25 @@ export class ClientAccountService {
   }
 
   public deleteClientAccount(input) {
-    let url = Config.GetUrl( 'client/accounts');
-    return this.http.delete<CcapiResult>(url, input)
-      .subscribe(
-        resdata => {
-          //if( resdata.res.rc != 0) {
-          //  this.authService.authTokenSubject.next(resdata.res.rc);
-          //} else {
-          //  if (resdata.data) {
-          //    this.clientAccount.set(resdata['data']);
-          //    console.log( ["1-deleteClientAccount", this.clientAccount]);
-          //    this.clientAccountSubject.next(resdata['data']);
-          //  } else {
-          //    console.log( ["resdata is null for ", resdata, input]);
-          //  }
-          //}
+    let url = Config.GetUrl('client/accounts');
+    return this.http.delete<CcapiResult>(url, input
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            //if( resdata.res.rc != 0) {
+            //  this.authService.authTokenSubject.next(resdata.res.rc);
+            //} else {
+            //  if (resdata.data) {
+            //    this.clientAccount.set(resdata['data']);
+            //    console.log( ["1-deleteClientAccount", this.clientAccount]);
+            //    this.clientAccountSubject.next(resdata['data']);
+            //  } else {
+            //    console.log( ["resdata is null for ", resdata, input]);
+            //  }
+            //}
+          }
         }
         , err => {
           console.log(err);

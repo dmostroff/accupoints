@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+.mat-toolbar.mat-primary {
+  background: #039be5;
+  color: #fff;
+}
+.mat-card-header {
+  width: 800px;
+}
+.mainPanel {
+  padding-top: 30px;
+  border-top: 2px solid slategrey;
+  background-color: aliceblue;
+}

@@ -56,18 +56,6 @@ export class LoginComponent implements OnInit {
       this.admUser.set(result);
       if (result && result.user_id > 0) {
         this.admUser.set(result);
-        this.authService.setToken(this.admUser.token);
-        if (this.authService.getToken()) {
-          this.bSuccess = true;
-          this.msg = this.admUser.user_name + ' successfully logged in';
-          let timeoutId = setTimeout(() => {
-            this.inLogin = false;
-            this.router.navigateByUrl('/clients/list'); // clients/accounts']);
-          }, 1500);
-        } else {
-          this.bSuccess = false;
-          this.msg = this.admUser.login + ': invalid user / password';
-        }
       } else {
         if (this.admUser.user_name && this.admUser.pwd) {
           this.msg = this.admUser.user_name + ' invalid user / password';
@@ -76,12 +64,19 @@ export class LoginComponent implements OnInit {
         }
       }
     });
-    this.authService.authTokenSubject.subscribe(tok => {
-      if (tok) {
-        this.authService.setToken(tok);
-//        this.router.navigate(['clients/accounts']);
+
+    this.authService.authTokenSubject.subscribe(token => {
+      this.bSuccess = this.authService.validUser;
+      if (this.bSuccess) {
+        this.msg = this.admUser.user_name + ' successfully logged in';
+        let timeoutId = setTimeout(() => {
+          this.inLogin = false;
+          //this.router.navigateByUrl('/clients/list'); // clients/accounts']);
+        }, 1500);
+      } else {
+        this.msg = this.admUser.login + ': invalid user / password';
       }
-    })
+    });
   }
   onSubmit() {
     if (this.loginForm.valid) {

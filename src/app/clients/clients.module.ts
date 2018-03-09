@@ -7,7 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../utils/token-interceptor';
 
 import { ClientsService } from './clients.service';
-import { ClientAccountService } from './client-account.service.ts';
+import { ClientAccountService } from './client-account.service';
 
 import { ClientsListComponent } from './persons/clients-list.component';
 import { PersonsComponent } from './persons/persons.component';

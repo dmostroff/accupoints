@@ -25,26 +25,26 @@ export class AdmUsersService {
 
 
   public login(input) {
+    this.authService.validUser = false;
     let myurl = Config.GetUrl(this.apiBaseUrl + '/login');
     const req = this.http.post<CcapiResult>( myurl, input)
       .subscribe(resp => {
           console.log(resp);
-          if (resp.data) {
+          if (0 == resp.res.rc && resp.data) {
             this.admUser.set(resp.data);
             //  console.log( ["1-login", this.admUser]);
-            //this.authService.authTokenSubject.next(this.admUser.token);
             this.admUserSubject.next(this.admUser);
             //this.authService.authTokenRCSubject.next(0);
             localStorage.setItem('user', this.admUser.login);
-            this.authService.setValidUser(true);
+            this.authService.authTokenSubject.next(this.admUser.token);
           } else {
+            this.authService.authTokenSubject.next(null);
             console.log(["resdata is null for ", resp, input]);
-            this.authService.setValidUser(false);
           }
         }
         , err => {
+          this.authService.authTokenSubject.next(null);
           console.log(err);
-          this.authService.setValidUser(false);
         }
       );
   }
@@ -52,17 +52,17 @@ export class AdmUsersService {
   public logout(input) {
     let myurl = Config.GetUrl(this.apiBaseUrl + '/logout');
     const req = this.http.post<CcapiResult>( myurl, input)
-      .subscribe(
-        resdata => {
-          //if( this.authService.getToken()) {
-          //  this.authService.setToken(null);
-          //}
-          if( this.admUser.user_id > 0) {
-            this.admUser.clear();
-            console.log( ["1-logout", this.admUser]);
-            this.admUserSubject.next(this.admUser);
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            if (this.admUser.user_id > 0) {
+              this.admUser.clear();
+              console.log(["1-logout", this.admUser]);
+              this.admUserSubject.next(this.admUser);
+            }
+            this.authService.validUser = false;
+            //this.authService.authTokenRCSubject.next(9);
           }
-          //this.authService.authTokenRCSubject.next(9);
         }
         , err => {
           console.log(err);

@@ -41,6 +41,7 @@
   <div *ngIf="isValidUser">
     <a mat-tab-link
        *ngFor="let link of navLinks"
+       [id]="link.id"
        [routerLink]="link.path"
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive">

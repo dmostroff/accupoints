@@ -1,5 +1,7 @@
-import { Component,  ViewChild, AfterViewInit  } from '@angular/core';
+import { Component,  ViewChild, OnInit, AfterViewInit  } from '@angular/core';
 import { MatTabsModule} from '@angular/material'
+import { Router } from "@angular/router";
+
 import { AdmUser} from './adm/adm-users';
 import { LoginComponent } from './adm/login.component';
 
@@ -13,11 +15,11 @@ import { AuthService } from './utils/auth.service';
   styleUrls: ['./app.component.css'],
 })
 
-export class AppComponent implements AfterViewInit  {
+export class AppComponent implements OnInit, AfterViewInit  {
   title: String = "AquiPoints";
   version: String = "1.01";
   admUser: AdmUser;
-  navLinks: any[];
+  public navLinks: any[];
   validToken: boolean;
   isValidUser: boolean;
   inLogin: boolean;
@@ -25,24 +27,33 @@ export class AppComponent implements AfterViewInit  {
   @ViewChild(LoginComponent) loginchild;
 
   constructor(
-    private admUsersService: AdmUsersService
+    private router: Router
+    , private admUsersService: AdmUsersService
     , private authService: AuthService) {
     this.validToken = false;
     this.admUser = new AdmUser();
     this.isValidUser = false;
     this.navLinks = [
-      { path: "cc/companylist", label: "CCard Companies", active: true }
-      , { path: "clients/list", label: "Clients", active: true}
-      , { path: "clients/accounts", label: "Accounts", active: true }
+      { path: "cc/companylist", label: "CCard Companies", active: true, id: 'companylist' }
+      , { path: "clients/list", label: "Clients", active: true, id: 'clientlist'}
+      , { path: "clients/accounts", label: "Accounts", active: true, id: 'clientaccounts' }
     ];
-    admUsersService.admUserSubject.subscribe( admUser => {
-      this.isValidUser = (admUser && admUser.token) ? true : false;
-      this.admUser.set( admUser);
-      this.authService.setValidUser(this.isValidUser );
-      console.log(this.isValidUser);
-    })
+
   }
 
+  ngOnInit() {
+    console.log( 'ngOnInit');
+    this.authService.authTokenSubject.subscribe( tok => {
+      this.isValidUser = this.authService.validUser;
+      this.router.navigate( ['clients', 'accounts']);
+      //this.router.navigateByUrl('/clients/list'); // clients/accounts']);
+      console.log(this.isValidUser);
+    });
+    this.admUsersService.admUserSubject.subscribe( admUser => {
+      this.admUser.set( admUser);
+      console.log(this.admUser);
+    });
+  }
   ngAfterViewInit() {
     this.inLogin = this.loginchild.inLogin;
     console.log(this.inLogin);

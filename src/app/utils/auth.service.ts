@@ -6,15 +6,23 @@ export class AuthService {
   //public authTokenRCSubject:BehaviorSubject<Number> = new BehaviorSubject<Number>(null);
   public authTokenSubject:BehaviorSubject<String> = new BehaviorSubject<String>(null);
 
-  private authToken: string;
-  private isValidUser: boolean;
+  private authToken_: string;
+  private isValidUser_: boolean;
 
-  public getToken(): string { return this.authToken; }
-  public setToken( tok) { this.authToken = tok; }
-  public validUser(): boolean { return this.isValidUser}
-  public setValidUser( bFlag) { this.isValidUser = bFlag; }
+  get token(): string { return this.authToken_; }
+  set token( tok) { this.authToken_ = tok; }
+  get validUser: boolean { return this.isValidUser_ }
+  set validUser( bFlag) { this.isValidUser_ = bFlag; }
   constructor() {
-    this.isValidUser = false;
+    this.isValidUser_ = false;
+    this.authToken_ = null;
+    this.authTokenSubject.subscribe( tok => {
+      this.authToken_ = tok;
+      this.isValidUser_ = ( this.authToken_) ? true : false;
+      console.log( "Token set " + this.authToken_);
+    })
   }
+
+
 
 }

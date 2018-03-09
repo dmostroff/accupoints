@@ -4,6 +4,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import { Config } from './../utils/config';
 import {CcapiResult} from './../utils/ccapiresult';
+import { AuthService } from './../utils/auth.service';
 
 import {ClientPerson} from './clientperson';
 import {ClientAddress} from './persons/client-address';
@@ -28,7 +29,8 @@ export class ClientsService {
 
   public clientShowModeSubject:BehaviorSubject<boolean[]> = new BehaviorSubject<boolean[]>([]);
 
-  constructor( private http:HttpClient ) {
+  constructor( private http:HttpClient
+    , private authService:AuthService) {
     this.apiBaseUrl = 'client';
     this.person = new ClientPerson();
     this.clientsList = <ClientPerson[]>[];
@@ -48,11 +50,14 @@ export class ClientsService {
 
   public getClientsList( ) {
     console.log( 'getClientsList');
-    let myurl = Config.GetUrl('client/person');
-    return this.http.get<CcapiResult>(myurl)
-      .subscribe(
-        resdata => {
-          this.clientsList = resdata.data;
+    let url = Config.GetUrl('client/person');
+    return this.http.get<CcapiResult>(url
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+        console.log(resp);
+        if (0 == resp.res.rc && resp.data) {
+          this.clientsList = resp.data;
           if(this.clientsList) {
             this.clientListCount = this.clientsList.length;
             console.log( ["personService.getClientsList", this.clientsList, this.clientsList.length] );
@@ -84,13 +89,14 @@ export class ClientsService {
     if( !this.person) {
       this.person = new ClientPerson();
     }
-    let myurl = Config.GetUrl('client/person/' + client_id);
-    return this.http.get<CcapiResult>(myurl)
-      .subscribe(
-        resdata => {
-          //console.log(data);
-          if (resdata && resdata.data) {
-            this.person.set(resdata.data);
+    let url = Config.GetUrl('client/person/' + client_id);
+    return this.http.get<CcapiResult>(url
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            this.person.set(resp.data);
             this.clientSubject.next(this.person);
             //this.personChange.next(resp['data']);
           }
@@ -107,12 +113,13 @@ export class ClientsService {
 
   public getClientAddresses(client_id) {
     this.clientAddresses = [];
-    let myurl = Config.GetUrl('client/person/' + client_id + '/address');
-    return this.http.get<CcapiResult>(myurl)
-      .subscribe(
-        resp => {
-          //console.log(data);
-          if (resp.data) {
+    let url = Config.GetUrl('client/person/' + client_id + '/address');
+    return this.http.get<CcapiResult>(url
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
             this.clientAddresses = resp.data;
             this.clientAddressesSubject.next(this.clientAddresses);
             //this.personChange.next(resp['data']);
@@ -131,15 +138,17 @@ export class ClientsService {
 
   public postClient(input ) {
     let myurl = Config.GetUrl('client/person');
-    return this.http.post<CcapiResult>(myurl, input)
-      .subscribe(
-        resdata => {
-          if( resdata && resdata.data) {
-            this.person.set(resdata.data);
+    return this.http.post<CcapiResult>(myurl, input
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+    )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            this.person.set(resp.data);
             console.log( ["1-postCcCard", this.person]);
             this.clientSubject.next(this.person);
           } else {
-            console.log( ["resdata is null for ", resdata, input]);
+            console.log( ["resdata is null for ", input]);
           }
         }
         , err => {
@@ -150,15 +159,17 @@ export class ClientsService {
 
   public postClientAddress(input ) {
     let myurl = Config.GetUrl('client/person/address');
-    return this.http.post<CcapiResult>(myurl, input)
-      .subscribe(
-        resdata => {
-          if( resdata.data) {
-            this.clientAddress.set(resdata.data);
+    return this.http.post<CcapiResult>(myurl, input
+      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
+      )
+      .subscribe(resp => {
+          console.log(resp);
+          if (0 == resp.res.rc && resp.data) {
+            this.clientAddress.set(resp.data);
             console.log( ["1-postclientAddress", this.clientAddress]);
             this.clientAddressSubject.next(this.clientAddress);
           } else {
-            console.log( ["resdata is null for ", resdata, input]);
+            console.log( ["resdata is null for ", input]);
           }
         }
         , err => {
