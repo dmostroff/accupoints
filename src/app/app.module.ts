@@ -30,6 +30,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { TokenInterceptor } from './utils/token-interceptor';
 import { AuthService } from './utils/auth.service';
 import { AdmUsersService } from './adm/adm-users.service';
+import { CcCompanyService } from './cc/cc-company.service';
 
 
 @NgModule({
@@ -60,7 +61,7 @@ import { AdmUsersService } from './adm/adm-users.service';
     AppRoutingModule,
     ClientsModule
   ],
-  providers: [AuthService, AdmUsersService
+  providers: [AuthService, AdmUsersService, CcCompanyService
     ,{
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

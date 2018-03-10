@@ -45,8 +45,11 @@ export class AppComponent implements OnInit, AfterViewInit  {
     console.log( 'ngOnInit');
     this.authService.authTokenSubject.subscribe( tok => {
       this.isValidUser = this.authService.validUser;
-      this.router.navigate( ['clients', 'accounts']);
-      //this.router.navigateByUrl('/clients/list'); // clients/accounts']);
+      if( this.isValidUser) {
+        this.router.navigate( ['clients', 'accounts']);
+      } else {
+        this.router.navigate( ['login']);
+      }
       console.log(this.isValidUser);
     });
     this.admUsersService.admUserSubject.subscribe( admUser => {

@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.admUsersService.admUserSubject.subscribe(result => {
       console.log(result);
       this.admUser.set(result);
@@ -64,20 +63,8 @@ export class LoginComponent implements OnInit {
         }
       }
     });
-
-    this.authService.authTokenSubject.subscribe(token => {
-      this.bSuccess = this.authService.validUser;
-      if (this.bSuccess) {
-        this.msg = this.admUser.user_name + ' successfully logged in';
-        let timeoutId = setTimeout(() => {
-          this.inLogin = false;
-          //this.router.navigateByUrl('/clients/list'); // clients/accounts']);
-        }, 1500);
-      } else {
-        this.msg = this.admUser.login + ': invalid user / password';
-      }
-    });
   }
+
   onSubmit() {
     if (this.loginForm.valid) {
       this.msg = 'Submittted';

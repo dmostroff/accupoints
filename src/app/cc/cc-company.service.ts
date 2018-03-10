@@ -35,6 +35,7 @@ export class CcCompanyService {
 
   public getCompanyList() {
     let url = Config.GetUrl('cc/company');
+    console.log(url);
     return this.http.get<CcapiResult>(url
       , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
       )
