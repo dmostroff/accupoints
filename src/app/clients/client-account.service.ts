@@ -133,12 +133,10 @@ export class ClientAccountService {
 
   public deleteClientAccount(input) {
     let url = Config.GetUrl('client/accounts');
-    return this.http.delete<CcapiResult>(url, input
-      , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
-      )
+    return this.http.delete<CcapiResult>(url, input)
       .subscribe(resp => {
           console.log(resp);
-          if (0 == resp.res.rc && resp.data) {
+          //if (0 == resp.res.rc && resp.data) {
             //if( resdata.res.rc != 0) {
             //  this.authService.authTokenSubject.next(resdata.res.rc);
             //} else {
@@ -150,7 +148,7 @@ export class ClientAccountService {
             //    console.log( ["resdata is null for ", resdata, input]);
             //  }
             //}
-          }
+          //}
         }
         , err => {
           console.log(err);

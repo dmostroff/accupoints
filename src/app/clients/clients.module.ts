@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AppModule } from './../app.module';
 import { AppMaterialModule} from './../utils/app-material.module';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UtilModule } from './../utils/util.module';
 
 import { TokenInterceptor } from '../utils/token-interceptor';
 
@@ -17,13 +18,25 @@ import { ClientAddressComponent } from './persons/client-address.component';
 
 import { ClientAccountListComponent } from './accounts/client-account-list.component';
 
+var MY_COMPONENTS = [
+  ClientsListComponent
+  , PersonsComponent
+  , PersonDlgComponent
+  , ClientAddressDlgComponent
+  , ClientAddressComponent
+  , ClientAccountListComponent
+];
 
 @NgModule({
   imports: [
     CommonModule
+    , FormsModule
+    , ReactiveFormsModule
     , AppMaterialModule
+    , UtilModule
   ],
-  declarations: [ClientsListComponent, PersonsComponent, PersonDlgComponent, ClientAddressDlgComponent, ClientAddressComponent, ClientAccountListComponent ],
+  declarations: [ MY_COMPONENTS ],
+  entryComponents: [PersonDlgComponent],
   providers: [ ClientsService, ClientAccountService]
 })
 export class ClientsModule { }

@@ -1,3 +1,122 @@
-<p>
-  cc-company-dlg works!
-</p>
+<form [formGroup]="ccCompanyForm" (ngSubmit)="onSubmit()" validate class="form-class">
+  <div fxLayout="column">
+    <div fxFlex="100%">
+      <div fxLayout="row">
+        <mat-form-field fxFlex fxFlexFill>
+          <div [hidden]="true">
+            <mat-input-container>
+              <input matInput type="text" formControlName="cc_company_id">
+            </mat-input-container>
+          </div>
+          <input matInput type="text" formControlName="cc_name" placeholder="cc_name">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">cc_name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex fxFlexFill [color]="accent">
+          <input matInput type="text" formControlName="url" placeholder="url">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">url is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field class="form-group" fxFlex fxFlexFill>
+          <input matInput type="text" formControlName="contact" placeholder="contact">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">contact is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field class="form-group" fxFlex fxFlexFill>
+          <input matInput type="text" formControlName="address_1" placeholder="address_1">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">address_1 is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexFill>
+          <input matInput type="text" formControlName="address_2" placeholder="address_2">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">address_2 is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex="">
+          <input matInput type="text" formControlName="city" placeholder="city">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">city is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-group" fxFlex="10%">
+          <input matInput type="text" formControlName="state" placeholder="state">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">state is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex="15%">
+          <input matInput type="text" formControlName="zip" placeholder="zip">
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">zip is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <div [hidden]="true">
+          <mat-form-field class="form-group" fxFlex>
+            <input matInput type="text" formControlName="country" placeholder="country" value="Israel">
+            <mat-error *ngIf="ccCompanyForm.hasError('required')">country is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group">
+          <input matInput type="text" formControlName="phone" placeholder="phone"
+                 pattern="[0-9]*"
+                 minlength="10"
+                 maxlength="10"
+          >
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">phone is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="phone_2" placeholder="phone_2"
+                 pattern="[0-9]*"
+                 minlength="10"
+                 maxlength="10"
+          >
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">phone_2 is <strong>required</strong></mat-error>
+          <mat-error *ngIf="ccCompanyForm.hasError('minlegth')">phone_2 should have <strong>10 digits</strong></mat-error>
+          <mat-error *ngIf="ccCompanyForm.hasError('pattern')">phone_2 should have <strong>only numbers</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="phone_cell" placeholder="phone_cell"
+                 pattern="[0-9]*"
+                 minlength="10"
+                 maxlength="10"
+          >
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">phone_cell is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="phone_fax" placeholder="phone_fax"
+                 pattern="[0-9]*"
+                 minlength="10"
+                 maxlength="10"
+          >
+          <mat-error *ngIf="ccCompanyForm.hasError('required')">phone_fax is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxFlex="100%">
+      <div fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="20px">
+        <button fxFlex="18%" mat-raised-button type="submit" color="primary" class="submitButton">
+          <mat-icon>done</mat-icon>
+          Submit
+        </button>
+        <button fxFlex="18%" mat-raised-button (click)="onClickCancel()">
+          <mat-icon>cancel</mat-icon>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<p>Form value: {{ccCompanyForm.value | json }}</p>);

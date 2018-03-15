@@ -1,3 +1,118 @@
-<p>
-  person-dlg works!
-</p>
+<h1 class="primary-color">{{title}} {{ clientPersonForm.value.dob | date}} {{ clientPersonForm.value.phone | phonefmt}}</h1>
+<form [formGroup]="clientPersonForm" (ngSubmit)="onSubmit()" class="form-class" fxLayout="column"
+      fxLayoutAlign="start start" novalidate>
+  <div fxFlex fxFlexFill>
+    <mat-dialog-content class="accent-color" style="background-color: #9e9e9e;">
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="client_id" placeholder="client_id" readonly>
+          <mat-error *ngIf="clientPersonForm.hasError('required')">client_id is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="last_name" placeholder="last_name">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">last_name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="first_name" placeholder="first_name">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">first_name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="middle_name" placeholder="middle_name">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">middle_name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="dob" placeholder="dob">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">dob is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="gender" placeholder="gender">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">gender is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="ssn" placeholder="ssn"
+                 pattern="\d{3}-\d{2}-\d{4}"
+          >
+          <mat-error *ngIf="clientPersonForm.hasError('required')">ssn is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="mmn" placeholder="mmn">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">mmn is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="email" placeholder="email">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="pwd" placeholder="pwd">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">pwd is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput formControlName="phone" placeholder="phone" type="tel"
+                 pattern="([1-9]\d{2}-)*[1-9]\d{2}-\d{4}"
+          >
+          <mat-error *ngIf="clientPersonForm.hasError('required')">phone is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="phone_2" placeholder="phone_2"
+                 pattern="([1-9]\d{2}-)*[1-9]\d{2}-\d{4}"
+          >
+          <mat-error *ngIf="clientPersonForm.hasError('required')">phone_2 is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="phone_cell" placeholder="phone_cell"
+                 pattern="([1-9]\d{2}-)*[1-9]\d{2}-\d{4}"
+          >
+          <mat-error *ngIf="clientPersonForm.hasError('required')">phone_cell is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="phone_fax" placeholder="phone_fax"
+                 pattern="([1-9]\d{2}-)*[1-9]\d{2}-\d{4}"
+          >
+          <mat-error *ngIf="clientPersonForm.hasError('required')">phone_fax is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
+          <input matInput type="text" formControlName="phone_official" placeholder="phone_official">
+          <mat-error *ngIf="clientPersonForm.hasError('required')">phone_official is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+  </div>
+  <div fxFlex fxFlexFill>
+    <mat-dialog-actions style="background-color: lightblue">
+      <div fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="20px">
+        <button fxFlex="18%" mat-raised-button type="submit" color="primary" class="submitButton"><mat-icon>done</mat-icon>Submit</button>
+        <button fxFlex="18%" mat-raised-button type="button" (click)="onClickCancel()"><mat-icon>cancel</mat-icon> Cancel</button>
+      </div>
+    </mat-dialog-actions>
+  </div>
+</form>
+<p>Form value: {{ clientPersonForm.value | json }}</p>

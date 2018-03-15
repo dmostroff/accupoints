@@ -73,8 +73,7 @@ export class CcCompanyService {
       );
   }
 
-  public
-  getCreditCards() {
+  public getCreditCards() {
     let url = Config.GetUrl('cc/cards');
     return this.http.get<CcapiResult>(url
       , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
@@ -94,8 +93,7 @@ export class CcCompanyService {
       );
   }
 
-  public
-  getCompanyCards(cc_company_id) {
+  public getCompanyCards(cc_company_id) {
     this.ccCompanyCardsSubject.next([]);
     let url = Config.GetUrl('cc/cards/' + cc_company_id);
     return this.http.get<CcapiResult>(url
@@ -115,8 +113,7 @@ export class CcCompanyService {
       );
   }
 
-  public
-  getCcCard(cc_card_id) {
+  public getCcCard(cc_card_id) {
     let url = Config.GetUrl('cc/cards/' + cc_card_id);
     return this.http.get<CcapiResult>(url
       , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
@@ -135,8 +132,7 @@ export class CcCompanyService {
       );
   }
 
-  public
-  postCompany(input) {
+  public postCompany(input) {
     let url = Config.GetUrl('cc/company');
     console.log(["0-postCompany", input, this.ccCompany]);
     return this.http.post<CcapiResult>(url, input

@@ -11,6 +11,7 @@ import {CcapiResult} from '../utils/ccapiresult';
 @Injectable()
 export class AdmUsersService {
   public admUserSubject:BehaviorSubject<AdmUser> = new BehaviorSubject<AdmUser>(null);
+  public admUserInLoginSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public admUser:AdmUser;
   private apiBaseUrl: String;
 
@@ -23,6 +24,9 @@ export class AdmUsersService {
     this.admUser.user_name = 'dano';
   }
 
+  public inLogin( bFlag:boolean) {
+    this.admUserInLoginSubject.next(bFlag);
+  }
 
   public login(input) {
     this.authService.validUser = false;

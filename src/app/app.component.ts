@@ -15,8 +15,8 @@ import { AuthService } from './utils/auth.service';
   styleUrls: ['./app.component.css'],
 })
 
-export class AppComponent implements OnInit, AfterViewInit  {
-  title: String = "AquiPoints";
+export class AppComponent implements OnInit  {
+  title: String = "AccuPoints";
   version: String = "1.01";
   admUser: AdmUser;
   public navLinks: any[];
@@ -34,9 +34,9 @@ export class AppComponent implements OnInit, AfterViewInit  {
     this.admUser = new AdmUser();
     this.isValidUser = false;
     this.navLinks = [
-      { path: "cc/companylist", label: "CCard Companies", active: true, id: 'companylist' }
+      { path: "clients/accounts", label: "Accounts", active: true, id: 'clientaccounts' }
       , { path: "clients/list", label: "Clients", active: true, id: 'clientlist'}
-      , { path: "clients/accounts", label: "Accounts", active: true, id: 'clientaccounts' }
+      , { path: "cc/companylist", label: "CCard Companies", active: true, id: 'companylist' }
     ];
 
   }
@@ -52,14 +52,15 @@ export class AppComponent implements OnInit, AfterViewInit  {
       }
       console.log(this.isValidUser);
     });
+
     this.admUsersService.admUserSubject.subscribe( admUser => {
       this.admUser.set( admUser);
       console.log(this.admUser);
     });
-  }
-  ngAfterViewInit() {
-    this.inLogin = this.loginchild.inLogin;
-    console.log(this.inLogin);
+
+    this.admUsersService.admUserInLoginSubject.subscribe( bFlag => {
+      this.inLogin = bFlag;
+    })
   }
 
   logout() {

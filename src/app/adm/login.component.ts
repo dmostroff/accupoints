@@ -30,14 +30,12 @@ export class LoginComponent implements OnInit {
   admUser: AdmUser;
   bSuccess: boolean;
   msg: string;
-  inLogin: boolean;
 
 
   constructor(private fb:FormBuilder
     , private admUsersService: AdmUsersService
     , private authService: AuthService
     , private router: Router ) {
-      this.inLogin = true;
       this.bSuccess = false;
       this.admUser = admUsersService.admUser;
       this.loginFormLoginControl = new FormControl(this.admUser.login, [Validators.required]);
@@ -55,22 +53,28 @@ export class LoginComponent implements OnInit {
       this.admUser.set(result);
       if (result && result.user_id > 0) {
         this.admUser.set(result);
+        this.admUsersService.inLogin(false);
       } else {
         if (this.admUser.user_name && this.admUser.pwd) {
           this.msg = this.admUser.user_name + ' invalid user / password';
         } else {
           this.msg = 'Please login';
         }
+        this.admUsersService.inLogin(true);
       }
     });
+    this.admUsersService.inLogin(true);
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
       this.msg = 'Submittted';
       console.log('login call');
-      this.inLogin = false;
       this.admUsersService.login(this.loginForm.value);
     }
+  }
+
+  ngOnDestroy() {
+    this.admUsersService.inLogin(false);
   }
 }

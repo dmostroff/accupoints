@@ -5,7 +5,7 @@ import {DataSource} from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import {MatPaginator, MatSort, MatButton} from '@angular/material';
+import {MatPaginator, MatSort, MatButton, MatDialog} from '@angular/material';
 
 import { ClientsService} from './../clients.service';
 import { ClientPerson} from './../clientperson';
@@ -35,7 +35,7 @@ export class ClientsListComponent implements OnInit {
   constructor(
     private clientsService: ClientsService
     , private router:Router
-    //, public dialog: MatDialog
+    , public dialog:MatDialog
   ) {
     this.dataLength = 0;
     this.showTable = false;
@@ -60,6 +60,7 @@ export class ClientsListComponent implements OnInit {
     });
     this.clientsService.clientSubject.subscribe( person => {
       this.person = person;
+      this.clientsService.getClientsList();
     });
     this.clientsService.clientShowModeSubject.subscribe( showMode => {
       this.showTable = showMode[0];
@@ -103,13 +104,13 @@ export class ClientsListComponent implements OnInit {
     this.clientsService.setClientMode('edit');
   }
 
-  openDialog(p): void {
-    //let dialogRef = this.dialog.open(PersonDlgComponent,{ width: '80%', data: { clientPerson: p }});
+  openDialog(clientPerson): void {
+    let dialogRef = this.dialog.open(PersonDlgComponent,{ width: '80%', data: clientPerson });
     //
-    //dialogRef.afterClosed().subscribe(result => {
-    //  console.log('The dialog was closed');
-    //  this.clientsService.person = result;
-    //});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.clientsService.person = result;
+    });
   }
 }
 

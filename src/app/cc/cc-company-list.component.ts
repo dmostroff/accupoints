@@ -14,7 +14,6 @@ import { CcCompanycardsComponent } from './cc-companycards.component';
 })
 export class CcCompanyListComponent implements OnInit {
   ccCompanyList: CcCompany[];
-  ccCompany: CcCompany;
 
   @ViewChild( CcCompanycardsComponent) ccCards;
   @ViewChild( CcCompanyComponent) ccCompany;

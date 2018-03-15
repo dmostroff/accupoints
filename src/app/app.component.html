@@ -52,7 +52,9 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
 <div fxFlex class="mainPanel">
   <router-outlet></router-outlet>
-  <app-login *ngIf="!isValidUser && !inLogin"></app-login>
+  <div *ngIf="!isValidUser && !inLogin">
+    <app-login ></app-login>
+  </div>
 </div>
 </div>
 
