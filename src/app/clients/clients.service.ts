@@ -44,6 +44,10 @@ export class ClientsService {
     console.log("person service destroy");
   }
 
+  public serviceName( val:string) {
+    return val + ' clientService';
+  }
+
   public getHubUsers() {
     let url = 'https://api.github.com/users/jonuts';
     return this.http.get(url)
@@ -98,6 +102,9 @@ export class ClientsService {
       .subscribe(resp => {
           console.log(resp);
           if (0 == resp.res.rc && resp.data) {
+            if( ! this.person) {
+              this.person = new ClientPerson();
+            }
             this.person.set(resp.data);
             this.clientSubject.next(this.person);
             //this.personChange.next(resp['data']);

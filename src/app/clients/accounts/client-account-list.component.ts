@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ClientAccount } from '../client-account';
 import { ClientAccountService } from '../client-account.service';
+import { ClientAccountDlgComponent } from './client-account-dlg.component';
 
 @Component({
   selector: 'app-client-account-list',
@@ -26,21 +27,21 @@ export class ClientAccountListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(public dialog:MatDialog
-    ,private accountsService: ClientAccountService) {
+    ,private accountService: ClientAccountService) {
     this.clientAccount = new ClientAccount();
   }
 
   ngOnInit() {
-    this.accountsService.getClientAccounts();
-    this.dataSource = new ClientAccountDataSource(this.accountsService, this.paginator); // , this.paginator, this.sort);
+    this.accountService.getClientAccounts();
+    this.dataSource = new ClientAccountDataSource(this.accountService, this.paginator); // , this.paginator, this.sort);
     this.dataLength = this.dataSource.dataLength;
-    this.accountsService.clientAccountListSubject.subscribe( accountList =>
+    this.accountService.clientAccountListSubject.subscribe( accountList =>
     {
       this.dataLength = this.dataSource.dataLength;
       this.clientAccountList = accountList;
       if(0 < this.paginator.pageSize) {
         this.showTable = true;
-        this.accountsService.getClientAccountListPage(this.paginator.pageIndex, this.paginator.pageSize);
+        this.accountService.getClientAccountListPage(this.paginator.pageIndex, this.paginator.pageSize);
       }
     });
   }
@@ -53,9 +54,15 @@ export class ClientAccountListComponent implements OnInit {
     console.log($event);
     this.dataSource.readData();
   }
-  openDialog( row) {
-    console.log( ['open dialog', row]);
+  openDialog(clientAccount): void {
+    let dialogRef = this.dialog.open(ClientAccountDlgComponent,{ width: '80%', data: clientAccount });
+    //
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(['The dialog was closed', result]);
+      this.accountService.clientAccountSubject.next( result);
+    });
   }
+
 
 }
 

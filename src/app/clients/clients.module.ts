@@ -9,6 +9,7 @@ import { TokenInterceptor } from '../utils/token-interceptor';
 
 import { ClientsService } from './clients.service';
 import { ClientAccountService } from './client-account.service';
+import { UtilsService } from './../utils/utils.service';
 
 import { ClientsListComponent } from './persons/clients-list.component';
 import { PersonsComponent } from './persons/persons.component';
@@ -17,6 +18,7 @@ import { ClientAddressDlgComponent } from './persons/client-address-dlg.componen
 import { ClientAddressComponent } from './persons/client-address.component';
 
 import { ClientAccountListComponent } from './accounts/client-account-list.component';
+import { ClientAccountDlgComponent } from './accounts/client-account-dlg.component';
 
 var MY_COMPONENTS = [
   ClientsListComponent
@@ -25,6 +27,7 @@ var MY_COMPONENTS = [
   , ClientAddressDlgComponent
   , ClientAddressComponent
   , ClientAccountListComponent
+  , ClientAccountDlgComponent
 ];
 
 @NgModule({
@@ -35,8 +38,8 @@ var MY_COMPONENTS = [
     , AppMaterialModule
     , UtilModule
   ],
-  declarations: [ MY_COMPONENTS ],
-  entryComponents: [PersonDlgComponent],
-  providers: [ ClientsService, ClientAccountService]
+  declarations: [ MY_COMPONENTS, ClientAccountDlgComponent ],
+  entryComponents: [PersonDlgComponent, ClientAccountDlgComponent],
+  providers: [ ClientsService, ClientAccountService ]
 })
 export class ClientsModule { }

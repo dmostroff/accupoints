@@ -27,6 +27,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { TokenInterceptor } from './utils/token-interceptor';
 import { AuthService } from './utils/auth.service';
 import { AdmUsersService } from './adm/adm-users.service';
+import { UtilsService } from './utils/utils.service';
 
 var MY_MODULES = [
   BrowserModule
@@ -62,7 +63,7 @@ var MY_COMPONENTS = [
   exports: [
     AppMaterialModule
   ],
-  providers: [AuthService, AdmUsersService
+  providers: [AuthService, AdmUsersService, UtilsService
     ,{
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

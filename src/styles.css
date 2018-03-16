@@ -12,3 +12,8 @@
   border-top: 2px solid slategrey;
   background-color: aliceblue;
 }
+
+label {
+  font-weight: bold;
+  padding-right: 8px;
+}

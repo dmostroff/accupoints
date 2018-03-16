@@ -9,7 +9,7 @@ export class PhonefmtPipe implements PipeTransform {
     if (!value) {
       return value;
     }
-    let v = value.replace(/[^d]/g, '');
+    let v = value.replace(/[^\d]/g, '');
     let phone_fmt = ''; // value.replace( /^(\d{3})(\d{3})(\d+)$/, '$1-$2-$3');
     let jj = 0;
     let kk = 0;
