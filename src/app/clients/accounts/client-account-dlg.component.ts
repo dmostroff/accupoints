@@ -53,9 +53,8 @@ export class ClientAccountDlgComponent {
   }
 
   createForm() {
-    let now = moment(this.clientAccount.account_date);
-    let account_date = now.format(); // new Date(new Date(this.clientAccount.account_date).toLocaleDateString( "en-US", { timeZone: "America/New_York"}));
-console.log( account_date);
+    let account_date = moment(this.clientAccount.account_date).format(); // new Date(new Date(this.clientAccount.account_date).toLocaleDateString( "en-US", { timeZone: "America/New_York"}));
+    console.log( account_date);
     this.clientAccount.account_num = this.accNumberPipe.transform(this.clientAccount.account_num);
 
 
