@@ -26,6 +26,7 @@ export class ClientAccountDlgComponent {
   title:string;
   clientAccount:ClientAccount;
   accountDate:Date;
+  showPwd: boolean;
 
   clientAccountForm:FormGroup;
   clientAccountFormControl:FormControl;
@@ -49,6 +50,7 @@ export class ClientAccountDlgComponent {
     companyService.ccCompanyCardsSubject.subscribe(data => {
       this.ccCards = data;
     });
+    this.showPwd=false;
     this.createForm();
   }
 
@@ -127,6 +129,9 @@ export class ClientAccountDlgComponent {
     }
   }
 
+  onClickCancel() {
+    this.dialogRef.close();
+  }
 
   onSubmit() {
     //let annual_fee = this.utilsService.toNumber(this.clientAccountForm.value['annual_fee']);
