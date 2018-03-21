@@ -21,11 +21,8 @@ export class UtilsService {
   }
 
   public currencyFmt(val) {
-    console.log(val);
     let v = this.toNumber(val);
-    console.log(v);
     let x = this.currencyPipe.transform(v, 'USD', 'symbol-narrow', '1.2-2'); // this.accountNumberFormat(value);
-    console.log(x);
     return x;
   }
 

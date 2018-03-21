@@ -35,8 +35,14 @@ export class ClientAccountListComponent implements OnInit {
     this.accountService.getClientAccounts();
     this.dataSource = new ClientAccountDataSource(this.accountService, this.paginator); // , this.paginator, this.sort);
     this.dataLength = this.dataSource.dataLength;
+    this.accountService.clientAccountSubject.subscribe( account => {
+      console.log(['account', account]);
+      this.accountService.getClientAccounts();
+    }
+
     this.accountService.clientAccountListSubject.subscribe( accountList =>
     {
+      console.log( ['account list', accountList]);
       this.dataLength = this.dataSource.dataLength;
       this.clientAccountList = accountList;
       if(0 < this.paginator.pageSize) {

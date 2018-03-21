@@ -84,14 +84,17 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex>
-          <input matInput type="text" formControlName="annual_fee" placeholder="Annual fee">
+          <input matInput type="text" formControlName="annual_fee" placeholder="Annual fee"
+           (blur)="transformAmount($event, 'annual_fee')" >
           <mat-error *ngIf="clientAccountForm.hasError('required')">annual_fee is <strong>required</strong>
           </mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex>
-          <input matInput type="text" formControlName="credit_limit" placeholder="Credit limit">
+          <input matInput type="text" formControlName="credit_limit" placeholder="Credit limit"
+            (blur)="transformAmount($event, 'credit_limit')" >
+
           <mat-error *ngIf="clientAccountForm.hasError('required')">credit_limit is <strong>required</strong>
           </mat-error>
         </mat-form-field>

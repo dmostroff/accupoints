@@ -7,6 +7,7 @@ import { SsnfmtPipe } from './ssnfmt.pipe';
 import { AccnumberPipe } from './accnumber.pipe';
 import { AccNumberMaskPipe } from './acc-number-mask.pipe';
 
+
 var MY_PIPES = [
   PhonefmtPipe,
   ZipcodePipe,

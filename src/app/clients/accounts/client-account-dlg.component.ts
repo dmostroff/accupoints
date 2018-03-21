@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import * as moment from 'moment'; // add this 1 of 4
 
 import { ClientsService } from './../clients.service';
 import { CcCompanyService } from './../../cc/cc-company.service';
@@ -13,6 +14,7 @@ import { CcCards } from './../../cc/cc-cards';
 
 import { PhonefmtPipe } from './../../utils/phonefmt.pipe';
 import { AccnumberPipe } from './../../utils/accnumber.pipe';
+import { CurrencyPipe } from '@angular/common'
 
 @Component({
   selector: 'app-client-account-dlg',
@@ -41,14 +43,9 @@ export class ClientAccountDlgComponent {
     , private utilsService:UtilsService
     , public dialogRef:MatDialogRef<ClientAccount>
     , private accNumberPipe:AccnumberPipe
+    , private currencyPipe:CurrencyPipe
     , @Inject(MAT_DIALOG_DATA) public data:ClientAccount) {
     this.clientAccount = data;
-    clientsService.clientsListSubject.subscribe(data => {
-      this.clientPersonList = data;
-      console.log('client List');
-      console.log(data);
-    });
-
     companyService.ccCompanyCardsSubject.subscribe(data => {
       this.ccCards = data;
     });
@@ -56,8 +53,9 @@ export class ClientAccountDlgComponent {
   }
 
   createForm() {
-    let account_date = new Date(this.clientAccount.account_date);
-
+    let now = moment(this.clientAccount.account_date);
+    let account_date = now.format(); // new Date(new Date(this.clientAccount.account_date).toLocaleDateString( "en-US", { timeZone: "America/New_York"}));
+console.log( account_date);
     this.clientAccount.account_num = this.accNumberPipe.transform(this.clientAccount.account_num);
 
 
@@ -70,7 +68,7 @@ export class ClientAccountDlgComponent {
       , account: this.clientAccount.account
       , account_num: this.clientAccount.account_num
       , account_info: this.clientAccount.account_info
-      , account_date: this.clientAccount.account_date
+      , account_date: account_date
       , cc_login: this.clientAccount.cc_login
       , cc_password: this.clientAccount.cc_password
       , cc_status: this.clientAccount.cc_status
@@ -88,18 +86,19 @@ export class ClientAccountDlgComponent {
         this.clientAccountForm.controls['account_num'].setValue(this.accNumberPipe.transform(value), {emitEvent: false});
       }
     );
-    this.clientAccountForm.controls['annual_fee'].setValue(this.utilsService.currencyFmt(this.clientAccountForm.value['annual_fee']), {emitEvent: false});
-    this.clientAccountForm.controls['annual_fee'].valueChanges.subscribe(
-      (value:string) => {
-        this.clientAccountForm.controls['annual_fee'].setValue(this.utilsService.currencyFmt(value), {emitEvent: false});
-      }
-    );
+    this.clientAccountForm.controls['annual_fee'].setValue(this.currencyPipe.transform(this.clientAccountForm.value['annual_fee'], 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
+    //this.clientAccountForm.controls['annual_fee'].valueChanges.subscribe(
+    //  (value:string) => {
+    //    let v = value.replace( /\$/g, '').replace(/,/, '').replace(/[^\d|\.]/g,'');
+    //    this.clientAccountForm.controls['annual_fee'].setValue(this.currencyPipe.transform(v, 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
+    //  }
+    //);
     this.clientAccountForm.controls['credit_limit'].setValue(this.utilsService.currencyFmt(this.clientAccountForm.value['credit_limit']), {emitEvent: false});
-    this.clientAccountForm.controls['credit_limit'].valueChanges.subscribe(
-      (value:string) => {
-        this.clientAccountForm.controls['credit_limit'].setValue(this.utilsService.currencyFmt(value), {emitEvent: false});
-      }
-    );
+    //this.clientAccountForm.controls['credit_limit'].valueChanges.subscribe(
+    //  (value:string) => {
+    //    this.clientAccountForm.controls['credit_limit'].setValue(this.utilsService.currencyFmt(value), {emitEvent: false});
+    //  }
+    //);
   }
 
   getName( ) {
@@ -113,6 +112,11 @@ export class ClientAccountDlgComponent {
     return null;
   }
 
+  transformAmount( $event, name) {
+        let v = this.clientAccountForm.controls[name].value.replace( /\$/g, '').replace(/,/, '').replace(/[^\d|\.]/g,'');
+        this.clientAccountForm.controls[name].setValue(this.currencyPipe.transform(v, 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
+
+  }
   clientChange() {
     console.log( this.selectedValue+' - grandmother operation');
     console.log(this.clientAccountForm);
@@ -129,6 +133,10 @@ export class ClientAccountDlgComponent {
     //let annual_fee = this.utilsService.toNumber(this.clientAccountForm.value['annual_fee']);
     //let credit_limit = this.utilsService.toNumber(this.clientAccountForm.value['credit_limit']);
     //toNumber
+    let account_date = new Date(this.clientAccountForm.value['account_date']);
+    let y = account_date.getFullYear() + '-' + (1+account_date.getMonth()) +'-'+account_date.getDate()
+    this.clientAccountForm.controls['account_date'].setValue(y, {emitEvent: false});
+    console.log( [account_date, y, this.clientAccountForm.value['account_date']]);
     console.log( this.clientAccountForm.value);
     this.clientAccountService.postClientAccount(this.clientAccountForm.value);
     this.dialogRef.close();
