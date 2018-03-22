@@ -28,6 +28,10 @@ export class AdmUsersService {
     this.admUserInLoginSubject.next(bFlag);
   }
 
+  public init() {
+    this.admUser.login = localStorage.getItem('login');
+  }
+
   public login(input) {
     this.authService.validUser = false;
     let myurl = Config.GetUrl(this.apiBaseUrl + '/login');
@@ -39,7 +43,7 @@ export class AdmUsersService {
             //  console.log( ["1-login", this.admUser]);
             this.admUserSubject.next(this.admUser);
             //this.authService.authTokenRCSubject.next(0);
-            localStorage.setItem('user', this.admUser.login);
+            localStorage.setItem('login', this.admUser.login);
             this.authService.authTokenSubject.next(this.admUser.token);
           } else {
             this.authService.authTokenSubject.next(null);

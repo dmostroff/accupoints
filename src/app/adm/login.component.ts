@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
     , private authService: AuthService
     , private router: Router ) {
       this.bSuccess = false;
+      admUsersService.init();
+
       this.admUser = admUsersService.admUser;
       this.loginFormLoginControl = new FormControl(this.admUser.login, [Validators.required]);
       this.loginFormPwdControl = new FormControl(this.admUser.pwd, [Validators.required, Validators.pattern(PWD_REGEX)]);

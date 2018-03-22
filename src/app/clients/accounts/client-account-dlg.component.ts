@@ -32,6 +32,7 @@ export class ClientAccountDlgComponent {
   clientAccountFormControl:FormControl;
 
   clientPersonList:ClientPerson[];
+  clientPerson: ClientPerson;
   ccCards:CcCards[];
   ccCardSelectedValue:number;
 
@@ -52,6 +53,7 @@ export class ClientAccountDlgComponent {
     });
     this.showPwd=false;
     this.createForm();
+    this.clientPerson = new ClientPerson();
   }
 
   createForm() {
@@ -63,6 +65,7 @@ export class ClientAccountDlgComponent {
     console.log(['createForm', this.clientAccount.account_date]);
     this.clientAccountForm = this.fb.group({
       account_id: this.clientAccount.account_id
+      , client: this.clientPerson
       , client_id: this.clientAccount.client_id
       , cc_card_id: this.clientAccount.cc_card_id
       , name: this.clientAccount.name
@@ -81,6 +84,20 @@ export class ClientAccountDlgComponent {
   }
 
   ngOnInit() {
+    this.clientPersonList = this.clientsService.clientsList;
+    if( this.clientPersonList && 0 == this.clientPersonList.length) {
+      this.clientsService.getClientsList();
+      console.log( [this.clientPersonList, 'clientPersonList' ]);
+    } else {
+      this.clientPersonList.forEach( client => {
+        if( client.client_id == this.clientAccount.client_id) {
+          console.log( client);
+          this.clientPerson.set(client);
+        }
+      });
+    }
+
+    this.clientsService.clientsListSubject.subscribe(clients => { this.clientPersonList = clients; })
     this.clientAccountForm.controls['account_num'].setValue(this.accNumberPipe.transform(this.clientAccountForm.value['account_num']), {emitEvent: false});
     this.clientAccountForm.controls['account_num'].valueChanges.subscribe(
       (value:string) => {
@@ -88,18 +105,7 @@ export class ClientAccountDlgComponent {
       }
     );
     this.clientAccountForm.controls['annual_fee'].setValue(this.currencyPipe.transform(this.clientAccountForm.value['annual_fee'], 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
-    //this.clientAccountForm.controls['annual_fee'].valueChanges.subscribe(
-    //  (value:string) => {
-    //    let v = value.replace( /\$/g, '').replace(/,/, '').replace(/[^\d|\.]/g,'');
-    //    this.clientAccountForm.controls['annual_fee'].setValue(this.currencyPipe.transform(v, 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
-    //  }
-    //);
     this.clientAccountForm.controls['credit_limit'].setValue(this.utilsService.currencyFmt(this.clientAccountForm.value['credit_limit']), {emitEvent: false});
-    //this.clientAccountForm.controls['credit_limit'].valueChanges.subscribe(
-    //  (value:string) => {
-    //    this.clientAccountForm.controls['credit_limit'].setValue(this.utilsService.currencyFmt(value), {emitEvent: false});
-    //  }
-    //);
   }
 
   getName( ) {
@@ -119,13 +125,15 @@ export class ClientAccountDlgComponent {
 
   }
   clientChange() {
-    console.log( this.selectedValue+' - grandmother operation');
-    console.log(this.clientAccountForm);
-    if( 0 < this.selectedValue) {
-      let name = this.getName( );
-      if( name ) {
-        this.clientAccountForm.patchValue({name: name})
-      }
+    this.clientAccountForm.patchValue( {client_id: this.clientPerson.client_id });
+    console.log( ['clientChange', this.clientPerson, this.clientAccount.client_id]);
+    //console.log(this.clientAccountForm);
+    if( 0 < this.clientPerson.client_id && 0 == this.clientAccountForm.value.name.length) {
+      let name = '';
+      if( this.clientPerson.first_name) { name += this.clientPerson.first_name; }
+      if( this.clientPerson.middle_name) { name += ' ' + this.clientPerson.middle_name; }
+      if( this.clientPerson.last_name) { name = (name.trim()) + ' ' + this.clientPerson.last_name; }
+      this.clientAccountForm.patchValue( {name: name.trim() });
     }
   }
 

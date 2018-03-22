@@ -19,9 +19,9 @@
         <!--</mat-error>-->
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">{{client_id}}
-        <mat-select formControlName="client_id" [(ngModel)]="selectedValue" placeholder="Client" fxFlex="60%" (ngModelChange)="clientChange()">
+        <mat-select formControlName="client" [(ngModel)]="clientPerson" placeholder="Client" fxFlex="60%" (ngModelChange)="clientChange()">
           <mat-option [value]="" disabled>Select a client</mat-option>
-          <mat-option *ngFor="let client of clientPersonList" [value]="client.client_id">
+          <mat-option *ngFor="let client of clientPersonList" [value]="client">
             {{ client.client_id }}] {{ client.first_name }} {{ client.middle_name }} {{ client.last_name }}
           </mat-option>
         </mat-select>
@@ -72,18 +72,18 @@
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex>
           <input [hidden]="showPwd" matInput type="password" formControlName="cc_password" placeholder="Password">
+          <input [hidden]="!showPwd" matInput type="text" formControlName="cc_password" placeholder="Password">
           <mat-error *ngIf="clientAccountForm.hasError('required')">cc_password is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-        <div fxFlex="5%" [hidden]="!showPwd">{{clientAccountForm.value.cc_password }}</div>
-        <button fxFlex="18%" mat-raised-button (click)="showPwd = !showPwd">
+        <a fxFlex="20" (click)="showPwd = !showPwd">
           <div [hidden]="showPwd">
             <mat-icon>lock_open</mat-icon>Show
           </div>
           <div [hidden]="!showPwd">
             <mat-icon>lock</mat-icon>Hide
           </div>
-        </button>
+        </a>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex>
