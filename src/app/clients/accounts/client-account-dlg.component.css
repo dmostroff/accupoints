@@ -1,0 +1,17 @@
+.cardSelect {
+  width: 350px;
+  font-size: larger;
+  border-bottom: solid 1px silver;
+}
+
+.clientSelect {
+  width: 350px;
+  font-size: larger;
+  border-bottom: solid 1px silver;
+}
+
+.cardHolderName {
+  width: 350px;
+  font-size: larger;
+  border-bottom: solid 1px silver;
+}

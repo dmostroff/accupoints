@@ -7,19 +7,19 @@
 <mat-toolbar color="primary">
   <nav>
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end end" fxLayoutGap="90px">
-      <div fxFlex fxFlexAlign="start">Ostroff Enterprises</div>
+      <div fxFlex fxFlexAlign="start">Ostroff Enterprises{{isValidUser}} || {{inLogin}} {{!inLogin || isValidUser}} {{!(inLogin || isValidUser)}}</div>
       <div fxFlex fxFlexFill></div>
       <div fxFlex fxFlexOffset="150px">
-        <div *ngIf="!isValidUser || !inLogin">
+        <div [hidden]="isValidUser || inLogin">
           <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper">Login</a>
         </div>
-        <div *ngIf="isValidUser" class="mat-h4" >
+        <div *ngIf="isValidUser" class="mat-h4" style="background-color: #e64a19">
           Welcome <span class="caption">{{admUser.user_name}}</span>
-          <a class="mat-button-wrapper" (click)="logout()" fxFlex fxFlexOffset="50px">Logout</a>
+          <a class="mat-button-wrapper" (click)="logout()" fxFlex fxFlexOffset="50px">Logout11{{inLogin || isValidUser}}</a>
         </div>
       </div>
-      <div fxFlexAlign="end end" *ngIf="isValidUser">
-        <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper" (click)="logout()">Logout</a>
+      <div fxFlexAlign="end end" [hidden]="!isValidUser || inLogin">
+        <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper" (click)="logout()">Logout2</a>
         <!--<a routerLink="aboutus" routerLinkActive="active" >About</a>-->
       </div>
       <div fxFlexAlign="end end">
@@ -38,7 +38,7 @@
 </mat-toolbar>
 
 <nav mat-tab-nav-bar>
-  <div *ngIf="isValidUser">
+  <div [hidden]="!isValidUser">
     <a mat-tab-link
        *ngFor="let link of navLinks"
        [id]="link.id"
@@ -52,7 +52,7 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
 <div fxFlex class="mainPanel">
   <router-outlet></router-outlet>
-  <div *ngIf="!isValidUser && !inLogin">
+  <div [hidden]="isValidUser || inLogin">
     <app-login ></app-login>
   </div>
 </div>

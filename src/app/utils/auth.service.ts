@@ -23,6 +23,14 @@ export class AuthService {
     })
   }
 
+  public setToken( tok) {
+    if( tok && 0 < tok.length) {
+      this.authTokenSubject.next(tok);
+    } else {
+      this.authTokenSubject.next(null);
+    }
+  }
+
 
 
 }

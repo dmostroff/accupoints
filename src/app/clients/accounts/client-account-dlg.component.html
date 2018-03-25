@@ -1,27 +1,26 @@
-<h1 mat-dialog-title class="primary-color">{{title}} :{{client_id}}:</h1>
+<h1 mat-dialog-title class="primary-color">{{title}}</h1>
 <form [formGroup]="clientAccountForm" class="form-class" fxLayout="column" fxLayoutAlign="center center" novalidate>
   <!--(ngSubmit)="onSubmit()"-->
   <div fxFlex fxFlexFill>
     <mat-dialog-content class="accent-color">
-      <div *ngIf="false" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-        <mat-form-field class="form-group" fxFlex>
-          <input matInput type="text" formControlName="account_id" placeholder="account_id">
-          <mat-error *ngIf="clientAccountForm.hasError('required')">clicc_id is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">{{client_id}}
-        <mat-select formControlName="cc_card_id" [(ngModel)]="ccCardSelectedValue" placeholder="Credit Card" fxFlex="60%">
+      <!--<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">-->
+        <!--<mat-form-field class="form-group" fxFlex>-->
+          <!--<input matInput type="text" formControlName="account_id" placeholder="account_id">-->
+          <!--<mat-error *ngIf="clientAccountForm.hasError('required')">clicc_id is <strong>required</strong>-->
+          <!--</mat-error>-->
+        <!--</mat-form-field>-->
+      <!--</div>-->
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"><label>Account Id:</label>{{clientAccountForm.value.account_id}}
+        <label>Card:</label>
+        <mat-select formControlName="cc_card_id" placeholder="Credit Card" fxFlex class="cardSelect">
           <mat-option [value]="" disabled>Select a credit card</mat-option>
-          <mat-option *ngFor="let ccCard of ccCards" [value]="ccCard.cc_card_id"> {{ccCard.card_name}}</mat-option>
+          <mat-option *ngFor="let ccCard of ccCards" [value]="ccCard.cc_card_id+''"> {{ccCard.card_name}}</mat-option>
         </mat-select>
-        <!--<mat-error *ngIf="clientAddressForm.hasError('required')">client_id is <strong>required</strong>-->
-        <!--</mat-error>-->
       </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">{{client_id}}
-        <mat-select formControlName="client" [(ngModel)]="clientPerson" placeholder="Client" fxFlex="60%" (ngModelChange)="clientChange()">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"><label>Client</label>
+        <mat-select formControlName="client_id" placeholder="Client" fxFlex class="clientSelect" (ngModelChange)="clientChange( $event)" >
           <mat-option [value]="" disabled>Select a client</mat-option>
-          <mat-option *ngFor="let client of clientPersonList" [value]="client">
+          <mat-option *ngFor="let client of clientPersonList" [value]="client.client_id+''">
             {{ client.client_id }}] {{ client.first_name }} {{ client.middle_name }} {{ client.last_name }}
           </mat-option>
         </mat-select>
@@ -29,7 +28,7 @@
         <!--</mat-error>-->
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-        <mat-form-field class="form-group" fxFlex>
+        <mat-form-field class="form-group" fxFlex class="cardHolderName"><label>Name on Card:</label>
           <input matInput type="text" formControlName="name" placeholder="Card Holder Name">
           <mat-error *ngIf="clientAccountForm.hasError('required')">name is <strong>required</strong>
           </mat-error>
@@ -86,21 +85,18 @@
         </a>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-        <mat-form-field class="form-group" fxFlex>
-          <input matInput type="text" formControlName="cc_status" placeholder="Card status">
-          <mat-error *ngIf="clientAccountForm.hasError('required')">cc_status is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-select formControlName="cc_status" placeholder="Card status" fxFlex="200px" >
+          <mat-option [value]="" disabled>Card Status</mat-option>
+          <mat-option *ngFor="let status of cardStatuses" [value]="status.tag">
+            {{ status.description }}
+          </mat-option>
+        </mat-select>
         <mat-form-field class="form-group" fxFlex>
           <input matInput type="text" formControlName="annual_fee" placeholder="Annual fee"
            (blur)="transformAmount($event, 'annual_fee')" >
           <mat-error *ngIf="clientAccountForm.hasError('required')">annual_fee is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex>
           <input matInput type="text" formControlName="credit_limit" placeholder="Credit limit"
             (blur)="transformAmount($event, 'credit_limit')" >

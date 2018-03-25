@@ -11,13 +11,15 @@ import { ClientAccount } from '../client-account';
 import { ClientAccountService } from '../client-account.service';
 import { ClientAccountDlgComponent } from './client-account-dlg.component';
 
+import { AccNumberMaskPipe } from '../../utils/acc-number-mask.pipe';
+
 @Component({
   selector: 'app-client-account-list',
   templateUrl: './client-account-list.component.html',
   styleUrls: ['./client-account-list.component.css']
 })
 export class ClientAccountListComponent implements OnInit {
-  displayedColumns = ['account_id', 'name', 'account_num', 'recorded_on', 'edit'];
+  displayedColumns = ['account_id', 'client_name', 'name', 'card_name', 'account_num', 'recorded_on', 'edit'];
   clientAccount: ClientAccount;
   clientAccountList: ClientAccount[];
   showTable: boolean;
@@ -27,7 +29,8 @@ export class ClientAccountListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(public dialog:MatDialog
-    ,private accountService: ClientAccountService) {
+    ,private accountService: ClientAccountService
+    ,private accountNumMaskPipe: AccNumberMaskPipe ) {
     this.clientAccount = new ClientAccount();
   }
 
@@ -38,10 +41,13 @@ export class ClientAccountListComponent implements OnInit {
     this.accountService.clientAccountSubject.subscribe( account => {
       console.log(['account', account]);
       this.accountService.getClientAccounts();
-    }
+    });
+    this.accountListInit();
 
-    this.accountService.clientAccountListSubject.subscribe( accountList =>
-    {
+  }
+
+  private accountListInit() {
+    this.accountService.clientAccountListSubject.subscribe( accountList => {
       console.log( ['account list', accountList]);
       this.dataLength = this.dataSource.dataLength;
       this.clientAccountList = accountList;

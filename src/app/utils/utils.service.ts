@@ -31,5 +31,12 @@ export class UtilsService {
     return v;
   }
 
+  public formatName( first, middle, last) {
+    let name = '';
+    if( first) { name += first; }
+    if( middle) { name += ' ' + middle; }
+    if( last) { name = (name.trim()) + ' ' + last; }
+    return name.trim();
+  }
 
 }

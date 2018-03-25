@@ -1,14 +1,12 @@
 <form [formGroup]="ccCompanyForm" (ngSubmit)="onSubmit()" validate class="form-class">
   <div fxLayout="column">
     <div fxFlex="100%">
-      <div fxLayout="row">
-        <mat-form-field fxFlex fxFlexFill>
-          <div [hidden]="true">
-            <mat-input-container>
-              <input matInput type="text" formControlName="cc_company_id">
-            </mat-input-container>
-          </div>
-          <input matInput type="text" formControlName="cc_name" placeholder="cc_name">
+      <div fxLayout="row"><div class="idshow">{{ccCompanyForm.cc_company_id}}</div>
+        <mat-form-field [hidden]="true" fxFlex fxFlexFill>
+           <input matInput type="text" formControlName="cc_company_id">
+        </mat-form-field>
+        <mat-form-field [hidden]="true" fxFlex fxFlexFill>
+          <input matInput type="text" formControlName="cc_name" placeholder="Company name">
           <mat-error *ngIf="ccCompanyForm.hasError('required')">cc_name is <strong>required</strong>
           </mat-error>
         </mat-form-field>
@@ -66,40 +64,20 @@
       </div>
       <div fxLayout="row" fxLayoutGap="15px">
         <mat-form-field class="form-group">
-          <input matInput type="text" formControlName="phone" placeholder="phone"
-                 pattern="[0-9]*"
-                 minlength="10"
-                 maxlength="10"
-          >
+          <input matInput type="text" formControlName="phone" placeholder="phone">
           <mat-error *ngIf="ccCompanyForm.hasError('required')">phone is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field class="form-group" fxFlex>
-          <input matInput type="text" formControlName="phone_2" placeholder="phone_2"
-                 pattern="[0-9]*"
-                 minlength="10"
-                 maxlength="10"
-          >
-          <mat-error *ngIf="ccCompanyForm.hasError('required')">phone_2 is <strong>required</strong></mat-error>
-          <mat-error *ngIf="ccCompanyForm.hasError('minlegth')">phone_2 should have <strong>10 digits</strong></mat-error>
-          <mat-error *ngIf="ccCompanyForm.hasError('pattern')">phone_2 should have <strong>only numbers</strong>
-          </mat-error>
+          <input matInput type="text" formControlName="phone_2" placeholder="phone_2">
         </mat-form-field>
         <mat-form-field class="form-group" fxFlex>
-          <input matInput type="text" formControlName="phone_cell" placeholder="phone_cell"
-                 pattern="[0-9]*"
-                 minlength="10"
-                 maxlength="10"
-          >
+          <input matInput type="text" formControlName="phone_cell" placeholder="phone_cell">
           <mat-error *ngIf="ccCompanyForm.hasError('required')">phone_cell is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field class="form-group" fxFlex>
-          <input matInput type="text" formControlName="phone_fax" placeholder="phone_fax"
-                 pattern="[0-9]*"
-                 minlength="10"
-                 maxlength="10"
-          >
+          <input matInput type="text" formControlName="phone_fax" placeholder="phone_fax">
           <mat-error *ngIf="ccCompanyForm.hasError('required')">phone_fax is <strong>required</strong>
           </mat-error>
         </mat-form-field>

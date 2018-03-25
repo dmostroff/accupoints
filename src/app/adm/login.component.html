@@ -1,11 +1,11 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" validate novalidate>
-  <mat-card>
-    <mat-card-header fxLayoutAlign="center center">
+  <mat-card fxLayout="column" fxLayoutAlign="space-around center" >
+    <mat-card-header>
       <mat-card-title>{{msg}}</mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
     </mat-card-header>
     <mat-card-content fxLayoutAlign="center center">
-        <div *ngIf="!bSuccess">
+        <div [hidden]="bSuccess">
           <mat-form-field>
             <input matInput
                    formControlName="login"
@@ -24,8 +24,13 @@
             </mat-error>
           </mat-form-field>
           </div>
+      <div [hidden]="bLoginError">
+        <mat-error>
+          freank Password must be 6 characters long and consist of mixed case, number, and punctuation.
+        </mat-error>
+      </div>
     </mat-card-content>
-    <mat-card-footer fxLayoutAlign="center center">
+    <mat-card-footer>
       <mat-card-actions>
         <button mat-raised-button type="submit" class="loginButton">Login</button>
         <button mat-button>Cancel</button>

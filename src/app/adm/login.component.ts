@@ -12,9 +12,34 @@ import { AuthService } from '../utils/auth.service';
 const PWD_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]{6,}$/;
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-  const isSubmitted = form && form.submitted;
-  return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  isErrorState(control:FormControl |
+
+  null
+,
+  form:FormGroupDirective | NgForm |
+  null
+):
+  boolean {
+  const
+  isSubmitted = form && form.submitted;
+  return
+!!(
+  control
+&&
+  control
+.
+  invalid
+&& (
+  control
+.
+  dirty
+||
+  control
+.
+  touched
+||
+  isSubmitted
+));
 }
 }
 
@@ -27,37 +52,51 @@ export class LoginComponent implements OnInit {
   loginForm:FormGroup;
   loginFormLoginControl:FormControl;
   loginFormPwdControl:FormControl;
-  admUser: AdmUser;
-  bSuccess: boolean;
-  msg: string;
+  admUser:AdmUser;
+  bSuccess:boolean;
+  bLoginError:boolean = true;
+  msg:string;
 
 
   constructor(private fb:FormBuilder
-    , private admUsersService: AdmUsersService
-    , private authService: AuthService
-    , private router: Router ) {
-      this.bSuccess = false;
-      admUsersService.init();
+    , private admUsersService:AdmUsersService
+    , private authService:AuthService
+    , private router:Router) {
+    this.bSuccess = false;
+    admUsersService.init();
 
-      this.admUser = admUsersService.admUser;
-      this.loginFormLoginControl = new FormControl(this.admUser.login, [Validators.required]);
-      this.loginFormPwdControl = new FormControl(this.admUser.pwd, [Validators.required, Validators.pattern(PWD_REGEX)]);
-      this.msg = 'Please Log In';
-      this.loginForm = this.fb.group({
-        login: this.loginFormLoginControl,
-        pwd: this.loginFormPwdControl
-      });
+    this.admUser = admUsersService.admUser;
+    this.loginFormLoginControl = new FormControl(this.admUser.login, [Validators.required]);
+    this.loginFormPwdControl = new FormControl(this.admUser.pwd, [Validators.required, Validators.pattern(PWD_REGEX)]);
+    this.msg = 'Please Log In';
+    this.loginForm = this.fb.group({
+      login: this.loginFormLoginControl,
+      pwd: this.loginFormPwdControl
+    });
+    this.init();
   }
 
   ngOnInit() {
+  }
+  private init() {
+    console.log( 'login on init');
+    this.admUsersService.inLogin(true);
     this.admUsersService.admUserSubject.subscribe(result => {
       console.log(result);
       this.admUser.set(result);
       if (result && result.user_id > 0) {
+        this.bLoginError = false;
         this.admUser.set(result);
         this.admUsersService.inLogin(false);
       } else {
-        if (this.admUser.user_name && this.admUser.pwd) {
+        this.bLoginError = true;
+      }
+    });
+
+    this.authService.authTokenSubject.subscribe(tok => {
+      this.bLoginError = !this.authService.validUser;
+      if (this.bLoginError) {
+        if (this.admUser.user_name.length > 0) {
           this.msg = this.admUser.user_name + ' invalid user / password';
         } else {
           this.msg = 'Please login';
@@ -65,7 +104,6 @@ export class LoginComponent implements OnInit {
         this.admUsersService.inLogin(true);
       }
     });
-    this.admUsersService.inLogin(true);
   }
 
   onSubmit() {

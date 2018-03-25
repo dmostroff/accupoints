@@ -1,25 +1,29 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { CcCompany } from './cc-company';
 import { CcCompanyService } from './cc-company.service';
 
+import { PhonefmtPipe } from './../utils/phonefmt.pipe';
+
 @Component({
   selector: 'app-cc-company-dlg',
   templateUrl: './cc-company-dlg.component.html',
   styleUrls: ['./cc-company-dlg.component.css']
 })
-export class CcCompanyDlgComponent {
+export class CcCompanyDlgComponent  {
   ccCompanyForm:FormGroup;
   ccCompanyFormControl:FormControl;
   ccCompany: CcCompany;
   originalCompanyName: String;
 
   constructor(private ccCompanyService: CcCompanyService
-    , public dialogRef:MatDialogRef<CcCompanyDlgComponent>
     , private fb:FormBuilder
-    , @Inject(MAT_DIALOG_DATA) public data:CcCompany) {
+    , public dialogRef:MatDialogRef<CcCompanyDlgComponent>
+    , @Inject(MAT_DIALOG_DATA) public data:CcCompany
+    , private phonefmt: PhonefmtPipe
+  ) {
     this.ccCompany = new CcCompany();
     this.ccCompany.set(data);
     this.ccCompanyFormControl = new FormControl([Validators.required]);
@@ -48,6 +52,17 @@ export class CcCompanyDlgComponent {
   }
 
   ngOnInit() {
+    let flds = [ 'phone', 'phone_2', 'phone_cell', 'phone_fax'];
+    flds.forEach( fld => {
+      this.ccCompanyForm.controls[fld].setValue(this.phonefmt.transform(this.ccCompanyForm.value[fld]), {emitEvent: false});
+      this.ccCompanyForm.controls[fld].valueChanges.subscribe(
+        (value:string) => {
+          this.ccCompanyForm.controls[fld].setValue(this.phonefmt.transform(value), {emitEvent: false});
+        }
+      );
+
+    })
+
   }
   onSubmit() {
     this.ccCompanyService.postCompany(this.ccCompanyForm.value);

@@ -19,7 +19,7 @@ import { ClientAddressComponent } from './persons/client-address.component';
 
 import { ClientAccountListComponent } from './accounts/client-account-list.component';
 import { ClientAccountDlgComponent } from './accounts/client-account-dlg.component';
-import { CurrencyPipe} from '@angular/common';
+import { PhonefmtPipe } from './../utils/phonefmt.pipe';
 
 var MY_COMPONENTS = [
   ClientsListComponent
@@ -41,6 +41,6 @@ var MY_COMPONENTS = [
   ],
   declarations: [ MY_COMPONENTS, ClientAccountDlgComponent ],
   entryComponents: [PersonDlgComponent, ClientAccountDlgComponent],
-  providers: [ ClientsService, ClientAccountService, CurrencyPipe ]
+  providers: [ ClientsService, ClientAccountService, PhonefmtPipe ]
 })
 export class ClientsModule { }

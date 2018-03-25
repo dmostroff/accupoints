@@ -1,6 +1,6 @@
 import { Component,  ViewChild, OnInit, AfterViewInit  } from '@angular/core';
 import { MatTabsModule} from '@angular/material'
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute} from "@angular/router";
 
 import { AdmUser} from './adm/adm-users';
 import { LoginComponent } from './adm/login.component';
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit  {
 
   constructor(
     private router: Router
+    , private activeRoute: ActivatedRoute
     , private admUsersService: AdmUsersService
     , private authService: AuthService) {
     this.validToken = false;
@@ -44,11 +45,14 @@ export class AppComponent implements OnInit  {
   ngOnInit() {
     console.log( 'ngOnInit');
     this.authService.authTokenSubject.subscribe( tok => {
+      console.log( [this.activeRoute.url, this.router.url]);
       this.isValidUser = this.authService.validUser;
       if( this.isValidUser) {
         this.router.navigate( ['clients', 'accounts']);
       } else {
-        this.router.navigate( ['login']);
+        if( !this.router.url.match(/\/login$/)) {
+          this.router.navigate( ['login']);
+        }
       }
       console.log(this.isValidUser);
     });

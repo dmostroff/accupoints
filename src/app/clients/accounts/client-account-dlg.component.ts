@@ -11,10 +11,12 @@ import { ClientAccount } from './../client-account';
 import { ClientAccountService } from './../client-account.service';
 import { ClientPerson } from './../clientperson';
 import { CcCards } from './../../cc/cc-cards';
+import { AdmTags } from './../../adm/adm-tags';
 
 import { PhonefmtPipe } from './../../utils/phonefmt.pipe';
 import { AccnumberPipe } from './../../utils/accnumber.pipe';
 import { CurrencyPipe } from '@angular/common'
+import {AdmTagsService} from "../../adm/adm-tags.service";
 
 @Component({
   selector: 'app-client-account-dlg',
@@ -35,36 +37,45 @@ export class ClientAccountDlgComponent {
   clientPerson: ClientPerson;
   ccCards:CcCards[];
   ccCardSelectedValue:number;
-
-  selectedValue:number;
+  cardStatuses: AdmTags[];
+  t: any;
 
   constructor(private fb:FormBuilder
     , private clientAccountService:ClientAccountService
     , private clientsService:ClientsService
     , private companyService:CcCompanyService
     , private utilsService:UtilsService
+    , private admTagsService: AdmTagsService
     , public dialogRef:MatDialogRef<ClientAccount>
     , private accNumberPipe:AccnumberPipe
     , private currencyPipe:CurrencyPipe
     , @Inject(MAT_DIALOG_DATA) public data:ClientAccount) {
     this.clientAccount = data;
-    companyService.ccCompanyCardsSubject.subscribe(data => {
-      this.ccCards = data;
-    });
+    console.log( ['constructor', this.clientAccount])
     this.showPwd=false;
     this.createForm();
     this.clientPerson = new ClientPerson();
+    this.cardStatuses = <AdmTags[]>[];
+    this.clientPersonList = this.clientsService.clientsList;
+    this.ccCards = <CcCards[]>[];
+    this.t = [
+      { id: 1, name: 'Will' }
+      , { id: 2, name: 'John'}
+      , { id: 3, name: 'Robot'}
+      , { id: 4, name: 'Franz'}
+    ]
   }
 
-  createForm() {
+  private createForm() {
     let account_date = moment(this.clientAccount.account_date).format(); // new Date(new Date(this.clientAccount.account_date).toLocaleDateString( "en-US", { timeZone: "America/New_York"}));
     console.log( account_date);
     this.clientAccount.account_num = this.accNumberPipe.transform(this.clientAccount.account_num);
 
 
-    console.log(['createForm', this.clientAccount.account_date]);
+    console.log(['createForm', this.clientAccount.cc_status]);
     this.clientAccountForm = this.fb.group({
       account_id: this.clientAccount.account_id
+      , t_id: 3
       , client: this.clientPerson
       , client_id: this.clientAccount.client_id
       , cc_card_id: this.clientAccount.cc_card_id
@@ -84,7 +95,35 @@ export class ClientAccountDlgComponent {
   }
 
   ngOnInit() {
-    this.clientPersonList = this.clientsService.clientsList;
+    this.cardStatusInit();
+    this.clientListInit();
+    this.ccCardsInit();
+    this.init();
+  }
+  private init() {
+
+    this.clientAccountForm.controls['account_num'].setValue(this.accNumberPipe.transform(this.clientAccountForm.value['account_num']), {emitEvent: false});
+    this.clientAccountForm.controls['account_num'].valueChanges.subscribe(
+      (value:string) => {
+        this.clientAccountForm.controls['account_num'].setValue(this.accNumberPipe.transform(value), {emitEvent: false});
+      }
+    );
+    this.clientAccountForm.controls['annual_fee'].setValue(this.currencyPipe.transform(this.clientAccountForm.value['annual_fee'], 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
+    this.clientAccountForm.controls['credit_limit'].setValue(this.utilsService.currencyFmt(this.clientAccountForm.value['credit_limit']), {emitEvent: false});
+  }
+
+  private cardStatusInit() {
+    if( 0 == this.cardStatuses.length) {
+      this.admTagsService.getTags('CARDSTATUS');
+    }
+
+    this.admTagsService.admTagsSubject.subscribe( tags => {
+      this.cardStatuses = tags;
+      console.log( this.cardStatuses);
+    });
+  }
+
+  private clientListInit() {
     if( this.clientPersonList && 0 == this.clientPersonList.length) {
       this.clientsService.getClientsList();
       console.log( [this.clientPersonList, 'clientPersonList' ]);
@@ -98,22 +137,22 @@ export class ClientAccountDlgComponent {
     }
 
     this.clientsService.clientsListSubject.subscribe(clients => { this.clientPersonList = clients; })
-    this.clientAccountForm.controls['account_num'].setValue(this.accNumberPipe.transform(this.clientAccountForm.value['account_num']), {emitEvent: false});
-    this.clientAccountForm.controls['account_num'].valueChanges.subscribe(
-      (value:string) => {
-        this.clientAccountForm.controls['account_num'].setValue(this.accNumberPipe.transform(value), {emitEvent: false});
-      }
-    );
-    this.clientAccountForm.controls['annual_fee'].setValue(this.currencyPipe.transform(this.clientAccountForm.value['annual_fee'], 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
-    this.clientAccountForm.controls['credit_limit'].setValue(this.utilsService.currencyFmt(this.clientAccountForm.value['credit_limit']), {emitEvent: false});
   }
 
-  getName( ) {
+  private ccCardsInit() {
+    if( 0 == this.ccCards.length) {
+      this.companyService.getCreditCards();
+    }
+    this.companyService.ccCompanyCardsSubject.subscribe(ccCards => { this.ccCards = ccCards; })
+  }
+
+  private getName( clientId) {
     let bFlag = true;
     for( let ii = 0; bFlag && ii < this.clientPersonList.length; ii++) {
-      if( this.clientPersonList[ii].client_id === this.selectedValue) {
-        bFlag = false;
-        return this.clientPersonList[ii].first_name + ' ' +this.clientPersonList[ii].last_name;
+      if( this.clientPersonList[ii].client_id == clientId) {
+        console.log( ['getName', ii, this.clientPersonList[ii], this.clientAccountForm.value.client_id])
+        this.clientPerson.set(this.clientPersonList[ii]);
+        return this.utilsService.formatName( this.clientPerson.first_name, this.clientPerson.middle_name, this.clientPerson.last_name);
       }
     }
     return null;
@@ -124,16 +163,13 @@ export class ClientAccountDlgComponent {
         this.clientAccountForm.controls[name].setValue(this.currencyPipe.transform(v, 'USD', 'symbol-narrow', '1.2-2'), {emitEvent: false});
 
   }
-  clientChange() {
-    this.clientAccountForm.patchValue( {client_id: this.clientPerson.client_id });
-    console.log( ['clientChange', this.clientPerson, this.clientAccount.client_id]);
-    //console.log(this.clientAccountForm);
-    if( 0 < this.clientPerson.client_id && 0 == this.clientAccountForm.value.name.length) {
-      let name = '';
-      if( this.clientPerson.first_name) { name += this.clientPerson.first_name; }
-      if( this.clientPerson.middle_name) { name += ' ' + this.clientPerson.middle_name; }
-      if( this.clientPerson.last_name) { name = (name.trim()) + ' ' + this.clientPerson.last_name; }
-      this.clientAccountForm.patchValue( {name: name.trim() });
+  clientChange(clientId) {
+
+    console.log(['cientchange', clientId]);
+
+    if( 0 < clientId && 0 == this.clientAccountForm.value.name.length) {
+      let name = this.getName(clientId);
+      this.clientAccountForm.patchValue( {name: name });
     }
   }
 

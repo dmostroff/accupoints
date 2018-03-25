@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, Pipe } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { CcCompany } from './cc-company';
 
 import { CcCompanyDlgComponent} from './cc-company-dlg.component';
-import {PhonefmtPipe} from "../utils/phonefmt.pipe";
 
 @Component({
   selector: 'cc-company',
@@ -14,14 +13,11 @@ import {PhonefmtPipe} from "../utils/phonefmt.pipe";
 export class CcCompanyComponent {
   @Input('ccCompany') ccCompany:CcCompany;
 
-  constructor(public matDialog:MatDialog
-    , private phoneFmt: PhonefmtPipe) {
-    this.ccCompany = new CcCompany();
-  }
+  greed: number;
 
-  ngOnChange() {
-    this.ccCompany.phone = this.phoneFmt.transform(this.ccCompany.phone ); // this.accountNumberFormat(value);
-    console.log(this.ccCompany.phone);
+  constructor(public matDialog:MatDialog) {
+    this.ccCompany = new CcCompany();
+    this.greed = 123.34;
   }
 
   editForm() {

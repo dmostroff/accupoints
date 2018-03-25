@@ -1,7 +1,10 @@
 export class ClientAccount {
   account_id: number;
   client_id: number;
+  first_name: string;
+  last_name: string;
   cc_card_id: number;
+  card_name: string;
   name: string;
   account: string;
   account_num: string;

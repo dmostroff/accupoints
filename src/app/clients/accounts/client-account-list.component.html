@@ -37,8 +37,8 @@
         <mat-cell *cdkCellDef="let row" fxFlex="15%">{{row.card_name}}</mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="account_num">
-        <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Name on Card</mat-header-cell>
-        <mat-cell *cdkCellDef="let row" fxFlex="15%">{{row.account_num}}</mat-cell>
+        <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Account #</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="15%">{{row.account_num | accnumbermask}}</mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="recorded_on">
         <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Recorded</mat-header-cell>

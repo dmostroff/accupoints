@@ -6,10 +6,10 @@
 <mat-card *ngIf="ccCompany">
   <mat-card-content>
     <div *ngIf="ccCompany.cc_name" fxLayout="row">
-      <h2 class="md-title" fxFlex="50%">{{ccCompany.cc_name}}</h2>
-      <div fxFlex></div>
-      <div fxFlex="6%" fxFlexAlign="end" class="id">{{ccCompany.cc_company_id}}</div>
-      <div fxFlex="16%" fxFlexAlign="end" class="recorded-on">{{ccCompany.recorded_on | date}}</div>
+      <h2 class="md-title" fxFlex="50%" style="width:50%">{{ccCompany.cc_name}}
+        <span fxFlex="6%" fxFlexAlign="end" class="idshow">{{ccCompany.cc_company_id}}</span>
+        <span fxFlex="16%" fxFlexAlign="end" class="recorded-on">{{ccCompany.recorded_on | date}}</span>
+      </h2>
     </div>
     <div fxLayout="row">
       <div fxFlex="10%" fxFlexAlign="end" [hidden]="!ccCompany.url"><label>Url: </label></div>
@@ -27,17 +27,14 @@
       <div fxFlex="10%"></div>
       <div fxFlex>{{ccCompany.city}}<span *ngIf="ccCompany.city && ccCompany.state">, </span>{{ccCompany.state}}
         <!--{{ccCompany.zip | zipcode }}-->
-        {{ccCompany.zip }}
+        {{ccCompany.zip }} {{ greed | currency }}
       </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
-      <div [hidden]="!ccCompany.phone" fxFlex><label>Phone</label>{{ccCompany.phone}}</div>
-      <div *ngIf="ccCompany.phone_2" fxFlex><label>Phone 2</label>{{ccCompany.phone_2 }}</div>
-      <div *ngIf="ccCompany.phone_cell" fxFlex><label>Cell</label>{{ccCompany.phone_cell }}</div>
-      <div *ngIf="ccCompany.phone_fax" fxFlex><label>Fax</label>{{ccCompany.phone_fax }}</div>
-      <!--<div *ngIf="ccCompany.phone_2" fxFlex><label>Phone 2</label>{{ccCompany.phone_2 | phone-fmt}}</div>-->
-      <!--<div *ngIf="ccCompany.phone_cell" fxFlex><label>Cell</label>{{ccCompany.phone_cell | phone-fmt}}</div>-->
-      <!--<div *ngIf="ccCompany.phone_fax" fxFlex><label>Fax</label>{{ccCompany.phone_fax | phone-fmt}}</div>-->
+      <div [hidden]="!ccCompany.phone" fxFlex><label>Phone</label>{{ccCompany.phone }}</div>
+      <!--<div *ngIf="ccCompany.phone_2" fxFlex><label>Phone 2</label>{{ccCompany.phone_2 | phonefmt }}</div>-->
+      <!--<div *ngIf="ccCompany.phone_cell" fxFlex><label>Cell</label>{{ccCompany.phone_cell | phonefmt}}</div>-->
+      <!--<div *ngIf="ccCompany.phone_fax" fxFlex><label>Fax</label>{{ccCompany.phone_fax | phonefmt }}</div>-->
     </div>
     <div fxLayout="row" fxLayoutAlign="end end">
       <button fxFlex="90px;" (click)="editForm()">Edit

@@ -44,14 +44,14 @@ export class AdmUsersService {
             this.admUserSubject.next(this.admUser);
             //this.authService.authTokenRCSubject.next(0);
             localStorage.setItem('login', this.admUser.login);
-            this.authService.authTokenSubject.next(this.admUser.token);
+            this.authService.setToken(this.admUser.token);
           } else {
-            this.authService.authTokenSubject.next(null);
+            this.authService.setToken(null);
             console.log(["resdata is null for ", resp, input]);
           }
         }
         , err => {
-          this.authService.authTokenSubject.next(null);
+          this.authService.setToken(null);
           console.log(err);
         }
       );
