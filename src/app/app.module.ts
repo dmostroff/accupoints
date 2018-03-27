@@ -11,7 +11,7 @@ import { AppMaterialModule} from './utils/app-material.module';
 import { UtilModule} from './utils/util.module';
 
 import { AppRoutingModule } from './app-routing.module';
- import { ClientsModule } from './clients/clients.module';
+import { ClientsModule } from './clients/clients.module';
 import { CcModule } from './cc/cc.module';
 
 

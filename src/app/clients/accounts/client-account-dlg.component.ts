@@ -21,7 +21,8 @@ import {AdmTagsService} from "../../adm/adm-tags.service";
 @Component({
   selector: 'app-client-account-dlg',
   templateUrl: './client-account-dlg.component.html',
-  styleUrls: ['./client-account-dlg.component.css']
+  styleUrls: ['./client-account-dlg.component.css'],
+  providers: [ CurrencyPipe, PhonefmtPipe]
 })
 
 export class ClientAccountDlgComponent {

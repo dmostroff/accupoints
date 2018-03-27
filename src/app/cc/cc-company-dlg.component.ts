@@ -10,7 +10,8 @@ import { PhonefmtPipe } from './../utils/phonefmt.pipe';
 @Component({
   selector: 'app-cc-company-dlg',
   templateUrl: './cc-company-dlg.component.html',
-  styleUrls: ['./cc-company-dlg.component.css']
+  styleUrls: ['./cc-company-dlg.component.css'],
+  providers: [ PhonefmtPipe]
 })
 export class CcCompanyDlgComponent  {
   ccCompanyForm:FormGroup;

@@ -3,12 +3,14 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { CcCompany } from './cc-company';
 
-import { CcCompanyDlgComponent} from './cc-company-dlg.component';
+import { CcCompanyDlgComponent } from './cc-company-dlg.component';
+import { PhonefmtPipe } from "../utils/phonefmt.pipe";
 
 @Component({
   selector: 'cc-company',
   templateUrl: './cc-company.component.html',
-  styleUrls: ['./cc-company.component.css']
+  styleUrls: ['./cc-company.component.css'],
+  providers: [ PhonefmtPipe ]
 })
 export class CcCompanyComponent {
   @Input('ccCompany') ccCompany:CcCompany;

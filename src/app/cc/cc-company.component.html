@@ -32,7 +32,7 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
       <div [hidden]="!ccCompany.phone" fxFlex><label>Phone</label>{{ccCompany.phone }}</div>
-      <!--<div *ngIf="ccCompany.phone_2" fxFlex><label>Phone 2</label>{{ccCompany.phone_2 | phonefmt }}</div>-->
+      <div *ngIf="ccCompany.phone_2" fxFlex><label>Phone 2</label>{{ccCompany.phone_2 }}</div>
       <!--<div *ngIf="ccCompany.phone_cell" fxFlex><label>Cell</label>{{ccCompany.phone_cell | phonefmt}}</div>-->
       <!--<div *ngIf="ccCompany.phone_fax" fxFlex><label>Fax</label>{{ccCompany.phone_fax | phonefmt }}</div>-->
     </div>

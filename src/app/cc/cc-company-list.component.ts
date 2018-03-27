@@ -7,31 +7,37 @@ import { CcCards } from './cc-cards';
 import { CcCompanyComponent } from './cc-company.component';
 import { CcCompanycardsComponent } from './cc-companycards.component';
 
+import { PhonefmtPipe } from './../utils/phonefmt.pipe';
+
 @Component({
   selector: 'cc-company-list',
   templateUrl: './cc-company-list.component.html',
-  styleUrls: ['./cc-company-list.component.css']
+  styleUrls: ['./cc-company-list.component.css'],
+  providers: [PhonefmtPipe]
 })
 export class CcCompanyListComponent implements OnInit {
-  ccCompanyList: CcCompany[];
+  ccCompanyList:CcCompany[];
 
-  @ViewChild( CcCompanycardsComponent) ccCards;
-  @ViewChild( CcCompanyComponent) ccCompany;
+  @ViewChild(CcCompanycardsComponent) ccCards;
+  @ViewChild(CcCompanyComponent) ccCompany;
 
-  constructor(
-    private ccCompanyService: CcCompanyService
-  ) {
+  constructor(private ccCompanyService:CcCompanyService
+    , private phonefmt:PhonefmtPipe) {
     this.ccCompanyList = [];
     this.ccCompany = new CcCompany();
-    console.log( 'ccCompanyList');
+    console.log('ccCompanyList');
   }
 
   ngOnInit() {
-    this.ccCompanyService.ccCompanyListSubject.subscribe( companylist => {
+    this.ccCompanyService.ccCompanyListSubject.subscribe(companylist => {
       this.ccCompanyList = companylist;
     });
-    this.ccCompanyService.ccCompanySubject.subscribe( company => {
+    this.ccCompanyService.ccCompanySubject.subscribe(company => {
       this.ccCompany = company;
+      if (company) {
+        this.ccCompany.phone = this.phonefmt.transform(this.ccCompany.phone);
+        this.ccCompany.phone_2 = this.phonefmt.transform(this.ccCompany.phone_2);
+      }
     });
     this.ccCompanyService.getCompanyList();
   }
@@ -40,7 +46,7 @@ export class CcCompanyListComponent implements OnInit {
     this.ccCompanyService.getCompanyList();
   }
 
-  onClick( id) {
+  onClick(id) {
     this.ccCompanyService.ccCompanyId = id;
     console.log(id);
     this.ccCompanyService.getCompany(id);
