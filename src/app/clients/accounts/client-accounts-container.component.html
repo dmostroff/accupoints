@@ -1,0 +1,10 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav opened mode="side">Start content</mat-sidenav>
+  <mat-sidenav opened mode="side" position="end">
+    <div [hidden]="!(clientAccount.account_id > 0)" fxLayout="row" fxLayoutAlign="start stretch"
+         style="background-color: tan; border: 3px solid silver;">
+      <client-accounts></client-accounts>
+    </div>
+  </mat-sidenav>
+  <client-account-list></client-account-list>
+</mat-sidenav-container>

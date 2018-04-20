@@ -11,6 +11,7 @@ import { AuthService } from '../utils/auth.service';
 //const PWD_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]{8,}$/;
 const PWD_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]{6,}$/;
 /** Error when invalid control is dirty, touched, or submitted. */
+  /*
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control:FormControl |
 
@@ -42,6 +43,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 ));
 }
 }
+*/
 
 @Component({
   selector: 'app-login',
@@ -56,6 +58,7 @@ export class LoginComponent implements OnInit {
   bSuccess:boolean;
   bLoginError:boolean = true;
   msg:string;
+  bInit: boolean;
 
 
   constructor(private fb:FormBuilder
@@ -63,6 +66,7 @@ export class LoginComponent implements OnInit {
     , private authService:AuthService
     , private router:Router) {
     this.bSuccess = false;
+    this.bInit = false;
     admUsersService.init();
 
     this.admUser = admUsersService.admUser;
@@ -73,17 +77,19 @@ export class LoginComponent implements OnInit {
       login: this.loginFormLoginControl,
       pwd: this.loginFormPwdControl
     });
-    this.init();
   }
 
   ngOnInit() {
+    this.bInit = true;
+    console.log( ['ngOnInit', this.bInit]);
+    this.init();
+    this.bInit = false;
   }
+
   private init() {
-    console.log( 'login on init');
+    console.log( ['login on init', this.bInit]);
     this.admUsersService.inLogin(true);
     this.admUsersService.admUserSubject.subscribe(result => {
-      console.log(result);
-      this.admUser.set(result);
       if (result && result.user_id > 0) {
         this.bLoginError = false;
         this.admUser.set(result);
@@ -96,7 +102,7 @@ export class LoginComponent implements OnInit {
     this.authService.authTokenSubject.subscribe(tok => {
       this.bLoginError = !this.authService.validUser;
       if (this.bLoginError) {
-        if (this.admUser.user_name.length > 0) {
+        if ((!this.bInit) && this.admUser.user_name.length > 0) {
           this.msg = this.admUser.user_name + ' invalid user / password';
         } else {
           this.msg = 'Please login';

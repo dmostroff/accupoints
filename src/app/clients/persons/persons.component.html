@@ -1,3 +1,53 @@
-<p>
-  persons works!
-</p>
+<mat-card *ngIf="clientPerson" class="container" fxLayout="column" fxLayoutAlign="center stretch" tabindex="0" style="background-color: #a7ffeb">
+  <mat-card-title-group>
+    <mat-card-title fxFlex fxFlexAlign="center">{{clientPerson.first_name}} {{clientPerson.last_name}}</mat-card-title>
+    <mat-card-subtitle fxFlex fxFlexAlign="center">Client</mat-card-subtitle>
+  </mat-card-title-group>
+  <mat-card-content fxFlex="100%" fxFlexAlign="center stretch">
+    <div fxLayout="column">
+      <div fxFlex>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Client_id:</label>{{clientPerson.client_id}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Last_name:</label>{{clientPerson.last_name}}</div>
+          <div fxFlex><label>First_name:</label>{{clientPerson.first_name}}</div>
+          <div fxFlex><label>Middle_name:</label>{{clientPerson.middle_name}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Dob:</label>{{clientPerson.dob}}</div>
+          <div fxFlex><label>Gender:</label>{{clientPerson.gender}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Ssn:</label>{{clientPerson.ssn | ssnfmt}}</div>
+          <div fxFlex><label>Mmn:</label>{{clientPerson.mmn}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Email:</label>{{clientPerson.email}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Pwd:</label>{{clientPerson.pwd}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Phone:</label>{{clientPerson.phone | phonefmt}}</div>
+          <div fxFlex><label>Phone_2:</label>{{clientPerson.phone_2 | phonefmt}}</div>
+          <div fxFlex><label>Phone_cell:</label>{{clientPerson.phone_cell | phonefmt}}</div>
+          <div fxFlex><label>Phone_fax:</label>{{clientPerson.phone_fax | phonefmt}}</div>
+          <div fxFlex><label>Phone_official:</label>{{clientPerson.phone_official | phonefmt}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex fxFlexAlign="end" class="recorded_on"><label>Recorded_on:</label>{{clientPerson.recorded_on}}</div>
+        </div>
+        <!--<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">-->
+          <!--<client-account-person></client-account-person>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+    <button mat-raised-button (click)="openDialog()"><mat-icon>edit</mat-icon> Edit</button>
+  </mat-card-actions>
+  <mat-card-footer fxFlexAlign="center">Client Person</mat-card-footer>
+</mat-card>
+
+

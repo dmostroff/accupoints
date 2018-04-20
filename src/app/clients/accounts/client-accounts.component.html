@@ -1,0 +1,49 @@
+<mat-card *ngIf="clientAccount" class="container" fxLayout="column" fxLayoutAlign="center stretch" tabindex="0" style="background-color: #a7ffeb">
+  <mat-card-title-group>
+    <mat-card-title fxFlex fxFlexAlign="center">{{clientAccount.name}}</mat-card-title>
+    <mat-card-subtitle fxFlex fxFlexAlign="center">Client</mat-card-subtitle>
+  </mat-card-title-group>
+  <mat-card-content fxFlex="100%" fxFlexAlign="center stretch">
+    <div fxLayout="column">
+      <div fxFlex>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Account_id:</label>{{clientAccount.account_id}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Card:</label>{{clientAccount.card_name}}</div>
+        </div>
+        <!--<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">-->
+          <!--<div fxFlex><label>Card Holder:</label>{{clientAccount.first_name}} {{clientAccount.last_name}}</div>-->
+        <!--</div>-->
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Account:</label>{{clientAccount.account_num  | accnumbermask}} {{clientAccount.account_info}}  {{clientAccount.account_date | date}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Login:</label>{{clientAccount.cc_login}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Status:</label>{{clientAccount.cc_status}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Fees:</label>{{clientAccount.annual_fee}}</div>
+          <div fxFlex><label>Credit Limit:</label>{{clientAccount.credit_limit}}</div>
+          <div fxFlex><label>Additional Card:</label>{{clientAccount.addtional_card}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Open Date:</label>{{clientAccount.open_date}}</div>
+          <div fxFlex><label>Close Date:</label>{{clientAccount.close_date}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Notes:</label>{{clientAccount.notes}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>Recorded On:</label>{{clientAccount.recorded_on | date}}</div>
+        </div>
+      </div>
+      </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+    <button mat-raised-button (click)="openDialog()"><mat-icon>edit</mat-icon> Edit</button>
+  </mat-card-actions>
+  <mat-card-footer fxFlexAlign="center">Client Account</mat-card-footer>
+</mat-card>

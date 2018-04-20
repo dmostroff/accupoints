@@ -4,7 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './adm/login.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
-import { ClientsListComponent  } from './clients/persons/clients-list.component';
+import { ClientsContainerComponent } from './clients/clients-container.component';
+import { ClientAccountsContainerComponent } from './clients/accounts/client-accounts-container.component';
+
+//import { ClientsListComponent  } from './clients/persons/clients-list.component';
+//import { PersonsComponent  } from './clients/persons/persons.component';
+//import { ClientAddressComponent  } from './clients/persons/client-address.component';
+
 import { ClientsModule } from './clients/clients.module';
 import { CcCompanyListComponent } from './cc/cc-company-list.component';
 import { ClientAccountListComponent } from './clients/accounts/client-account-list.component';
@@ -18,17 +24,16 @@ export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'aboutus', component: AboutusComponent },
 //  { path: 'clients/list', component: ClientsListComponent, outlet: 'person'},
-  { path: 'clients'
-    , children: [
-      { path: 'list', component: ClientsListComponent }
-      , { path: 'accounts', component: ClientAccountListComponent }
-    ]},
-  //    //{ path: 'persons', component: ClientsListComponent, children: [
-  //    //  { path: ':client_id', component: PersonsComponent, outlet: "person" },
-  //    //  //{ path: ':client_id/address/:address_id', component: ClientAddressComponent }
-  //    //]
+  { path: 'clients', children: [
+      { path: 'list', component: ClientsContainerComponent}
+      , { path: 'accounts', component: ClientAccountsContainerComponent }
+      //,  { path: 'persons', component: ClientsContaineronent, children: [
+    //        { path: ':client_id', component: PersonsComponent, outlet: "person" },
+    //        { path: ':client_id/address/:address_id', component: ClientAddressComponent }
+    //      ]}
+    //]},
   //    //},
-  //  ]},
+    ]},
   { path: 'cc'
     , children: [
     { path: 'companylist', component: CcCompanyListComponent }

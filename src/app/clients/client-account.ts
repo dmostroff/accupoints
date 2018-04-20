@@ -16,6 +16,9 @@ export class ClientAccount {
   annual_fee: number;
   credit_limit: number;
   addtional_card: number;
+  open_date: Date;
+  close_date: Date;
+  notes: string;
   recorded_on: Date;
 
   constructor() {

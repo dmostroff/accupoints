@@ -61,6 +61,7 @@
           </mat-error>
         </mat-form-field>
       </div>
+      <div fxLayout="row"><hr color="gold"/></div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex>
           <input matInput type="text" formControlName="cc_login" placeholder="Login">
@@ -83,6 +84,20 @@
             <mat-icon>lock</mat-icon>Hide
           </div>
         </a>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+      <mat-form-field class="form-group" fxFlex="20">
+        <input matInput [matDatepicker]="open_date_picker" formControlName="open_date" placeholder="Open Date">
+        <mat-datepicker-toggle matSuffix [for]="open_date_picker"></mat-datepicker-toggle>
+        <mat-datepicker #open_date_picker></mat-datepicker>
+        <mat-error *ngIf="clientAccountForm.hasError('required')">Open Date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+        <mat-form-field class="form-group" fxFlex="20">
+          <input matInput [matDatepicker]="close_date_picker" formControlName="close_date" placeholder="Close Date">
+          <mat-datepicker-toggle matSuffix [for]="close_date_picker"></mat-datepicker-toggle>
+          <mat-datepicker #close_date_picker></mat-datepicker>
+        </mat-form-field>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-select formControlName="cc_status" placeholder="Card status" fxFlex="200px" >
@@ -110,6 +125,11 @@
           <input matInput type="text" formControlName="addtional_card" placeholder="Addtional Card Holder">
           <mat-error *ngIf="clientAccountForm.hasError('required')">addtional_card is <strong>required</strong>
           </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="notes" placeholder="Notes">
         </mat-form-field>
       </div>
     </mat-dialog-content>

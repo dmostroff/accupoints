@@ -14,7 +14,7 @@ import { ClientAccountDlgComponent } from './client-account-dlg.component';
 import { AccNumberMaskPipe } from '../../utils/acc-number-mask.pipe';
 
 @Component({
-  selector: 'app-client-account-list',
+  selector: 'client-account-list',
   templateUrl: './client-account-list.component.html',
   styleUrls: ['./client-account-list.component.css']
 })
@@ -35,7 +35,6 @@ export class ClientAccountListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.accountService.getClientAccounts();
     this.dataSource = new ClientAccountDataSource(this.accountService, this.paginator); // , this.paginator, this.sort);
     this.dataLength = this.dataSource.dataLength;
     this.accountService.clientAccountSubject.subscribe( account => {
@@ -43,7 +42,6 @@ export class ClientAccountListComponent implements OnInit {
       this.accountService.getClientAccounts();
     });
     this.accountListInit();
-
   }
 
   private accountListInit() {
@@ -56,6 +54,11 @@ export class ClientAccountListComponent implements OnInit {
         this.accountService.getClientAccountListPage(this.paginator.pageIndex, this.paginator.pageSize);
       }
     });
+  }
+
+  showDetail( rowd) {
+    console.log( ['showDetail', rowd]);
+    this.accountService.getClientAccount(rowd.account_id);
   }
 
   showClientAccount( clientAccount: ClientAccount) {

@@ -13,13 +13,12 @@
         <div [hidden]="isValidUser || inLogin">
           <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper">Login</a>
         </div>
-        <div *ngIf="isValidUser" class="mat-h4" style="background-color: #e64a19">
+        <div *ngIf="isValidUser && !inLogin" class="mat-h4" style="background-color: #e64a19">
           Welcome <span class="caption">{{admUser.user_name}}</span>
-          <a class="mat-button-wrapper" (click)="logout()" fxFlex fxFlexOffset="50px">Logout11{{inLogin || isValidUser}}</a>
         </div>
       </div>
-      <div fxFlexAlign="end end" [hidden]="!isValidUser || inLogin">
-        <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper" (click)="logout()">Logout2</a>
+      <div fxFlexAlign="end end" [hidden]="inLogin || !isValidUser">
+        <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper" (click)="logout()">Logout2a</a>
         <!--<a routerLink="aboutus" routerLinkActive="active" >About</a>-->
       </div>
       <div fxFlexAlign="end end">

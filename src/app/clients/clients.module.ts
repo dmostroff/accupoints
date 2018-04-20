@@ -20,15 +20,21 @@ import { ClientAddressComponent } from './persons/client-address.component';
 import { ClientAccountListComponent } from './accounts/client-account-list.component';
 import { ClientAccountDlgComponent } from './accounts/client-account-dlg.component';
 import { PhonefmtPipe } from './../utils/phonefmt.pipe';
+import { ClientsContainerComponent } from "./clients-container.component";
+import { ClientAccountsContainerComponent } from "./accounts/client-accounts-container.component";
+import { ClientAccountsComponent } from './accounts/client-accounts.component';
 
 var MY_COMPONENTS = [
-  ClientsListComponent
+  ClientsContainerComponent
+  , ClientsListComponent
   , PersonsComponent
   , PersonDlgComponent
   , ClientAddressDlgComponent
   , ClientAddressComponent
+  , ClientAccountsContainerComponent
   , ClientAccountListComponent
   , ClientAccountDlgComponent
+  , ClientAccountsComponent
 ];
 
 @NgModule({
@@ -39,7 +45,7 @@ var MY_COMPONENTS = [
     , AppMaterialModule
     , UtilModule
   ],
-  declarations: [ MY_COMPONENTS, ClientAccountDlgComponent ],
+  declarations: [ MY_COMPONENTS ],
   entryComponents: [PersonDlgComponent, ClientAccountDlgComponent],
   providers: [ ClientsService, ClientAccountService, PhonefmtPipe ]
 })

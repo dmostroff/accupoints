@@ -26,7 +26,7 @@ export class ClientsListComponent implements OnInit {
   showPersonEdit: boolean;
 
   clientsList: ClientPerson[];
-  person: ClientPerson;
+  clientPerson: ClientPerson;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   //@ViewChild(MatSort) sort: MatSort;
@@ -49,7 +49,7 @@ export class ClientsListComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new ClientPersonDataSource(this.clientsService, this.paginator); // , this.paginator, this.sort);
     this.clientsService.clientsListSubject.subscribe( clientsList => {
-      console.log(["1.clientsListSubject", clientsList, this.paginator.pageIndex, this.paginator.pageSize]);
+      //console.log(["1.clientsListSubject", clientsList, this.paginator.pageIndex, this.paginator.pageSize]);
       if( 0 < clientsList.length) {
         this.clientsList = clientsList;
         if(0 < this.paginator.pageSize) {
@@ -59,7 +59,7 @@ export class ClientsListComponent implements OnInit {
       }
     });
     this.clientsService.clientSubject.subscribe( person => {
-      this.person = person;
+      this.clientPerson = person;
       this.clientsService.getClientsList();
     });
     this.clientsService.clientShowModeSubject.subscribe( showMode => {
@@ -67,18 +67,13 @@ export class ClientsListComponent implements OnInit {
       this.showPersonDisplay = showMode[1];
       this.showPersonEdit = showMode[2];
     });
-    console.log( 'getPersonsList');
-    this.clientsService.getClientsList();
+    //this.clientsService.getClientsList();
     this.clientsService.setClientsListMode();
 
 //    this.personService.getPersonListPage(this.paginator.pageIndex, this.paginator.pageSize);
   }
 
-  ngOnDestroy() {
-    //this.personService.clientsListSubject.unsubscribe();
-  }
-
-  getServerData($event) {
+ getServerData($event) {
     console.log($event);
     this.dataSource.readData();
   }
@@ -94,8 +89,8 @@ export class ClientsListComponent implements OnInit {
   }
 
   showDetail(rowd) {
-    console.log( ["showDetail", rowd])
-    this.router.navigate(['/clients/persons', {outlets: {'person' : [rowd.client_id]}}]);
+    //console.log( ["showDetail", rowd])
+    this.clientsService.getClient(rowd.client_id);
   }
 
   onClick(p) {

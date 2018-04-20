@@ -69,6 +69,8 @@ export class ClientAccountDlgComponent {
 
   private createForm() {
     let account_date = moment(this.clientAccount.account_date).format(); // new Date(new Date(this.clientAccount.account_date).toLocaleDateString( "en-US", { timeZone: "America/New_York"}));
+    let open_date = moment(this.clientAccount.open_date).format();
+    let close_date = moment(this.clientAccount.close_date).format();
     console.log( account_date);
     this.clientAccount.account_num = this.accNumberPipe.transform(this.clientAccount.account_num);
 
@@ -91,6 +93,9 @@ export class ClientAccountDlgComponent {
       , annual_fee: this.clientAccount.annual_fee
       , credit_limit: this.clientAccount.credit_limit
       , addtional_card: this.clientAccount.addtional_card
+      , open_date: open_date
+      , close_date: close_date
+      , notes: this.clientAccount.notes
     });
 
   }

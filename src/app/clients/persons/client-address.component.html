@@ -1,3 +1,69 @@
-<p>
-  client-address works!
-</p>
+<h1 mat-dialog-title class="primary-color">{{title}}</h1>
+<form [formGroup]="clientAddressForm" class="form-class" fxLayout="column" fxLayoutAlign="center center" novalidate>
+  <!--(ngSubmit)="onSubmit()"-->
+  <div fxFlex fxFlexFill>
+    <mat-dialog-content class="accent-color">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"><label>Address Id:</label>{{clientAccountForm.value.address_id}}
+        <label>Client:</label>{{ client_name}}
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex="20">
+          <input matInput [matDatepicker]="valid_from_picker" formControlName="valid_from" placeholder="Valid From">
+          <mat-datepicker-toggle matSuffix [for]="valid_from_picker"></mat-datepicker-toggle>
+          <mat-datepicker #open_date_picker></mat-datepicker>
+          <mat-error *ngIf="clientAccountForm.hasError('required')">Valid From Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex="20">
+          <input matInput [matDatepicker]="valid_to_picker" formControlName="valid_to" placeholder="Valid To">
+          <mat-datepicker-toggle matSuffix [for]="valid_to_picker"></mat-datepicker-toggle>
+          <mat-datepicker #close_date_picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="address_1" placeholder="address_1">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="address_2" placeholder="address_2">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="city" placeholder="city">
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="state" placeholder="state">
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="zip" placeholder="zip">
+        </mat-form-field>
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="country" placeholder="country">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="notes" placeholder="Notes">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field class="form-group" fxFlex>
+          <input matInput type="text" formControlName="notes" placeholder="Notes">
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+  </div>
+  <div fxFlex="100%">
+    <mat-dialog-actions>
+      <div fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="20px">
+        <button fxFlex="18%" mat-raised-button (click)="onSubmit()" type="submit" color="primary" class="submitButton"><mat-icon>done</mat-icon>Submit</button>
+        <button fxFlex="18%" mat-raised-button (click)="onClickCancel()"><mat-icon>cancel</mat-icon> Cancel</button>
+      </div>
+    </mat-dialog-actions>
+  </div>
+  <p>Form value: {{clientAddressForm.value | json }}</p>
+  <p>Form status: {{ clientAddressForm.status | json }}</p>
+</form>
