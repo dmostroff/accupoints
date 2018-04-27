@@ -16,17 +16,17 @@
           <!--<div fxFlex><label>Card Holder:</label>{{clientAccount.first_name}} {{clientAccount.last_name}}</div>-->
         <!--</div>-->
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-          <div fxFlex><label>Account:</label>{{clientAccount.account_num  | accnumbermask}} {{clientAccount.account_info}}  {{clientAccount.account_date | date}}</div>
+          <div fxFlex><label>Account:</label>{{clientAccount.account_num  | accnumbermask}} {{clientAccount.account_info}} <label>Exp Date:</label>{{clientAccount.account_date | date}}</div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
           <div fxFlex><label>Login:</label>{{clientAccount.cc_login}}</div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-          <div fxFlex><label>Status:</label>{{clientAccount.cc_status}}</div>
+          <div fxFlex><label>Status:</label>{{clientAccount.cc_status_desc}}</div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-          <div fxFlex><label>Fees:</label>{{clientAccount.annual_fee}}</div>
-          <div fxFlex><label>Credit Limit:</label>{{clientAccount.credit_limit}}</div>
+          <div fxFlex><label>Annual Fees:</label>{{clientAccount.annual_fee | currency:'USD':'symbol':'3.2-2' }}</div>
+          <div fxFlex><label>Credit Limit:</label>{{clientAccount.credit_limit | currency:'USD':'symbol':'4.2-2' }}</div>
           <div fxFlex><label>Additional Card:</label>{{clientAccount.addtional_card}}</div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
@@ -34,7 +34,7 @@
           <div fxFlex><label>Close Date:</label>{{clientAccount.close_date}}</div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-          <div fxFlex><label>Notes:</label>{{clientAccount.notes}}</div>
+          <div fxFlex="200px"><label>Notes:</label>{{clientAccount.notes}}</div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
           <div fxFlex><label>Recorded On:</label>{{clientAccount.recorded_on | date}}</div>

@@ -1,6 +1,9 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav opened mode="side">Start content</mat-sidenav>
-  <mat-sidenav opened mode="side" position="end">
+  <mat-sidenav opened mode="side" opened="true" fxFlex="200px">Start content</mat-sidenav>
+  <mat-sidenav opened mode="side" opened="true" style="width: 300px;" position="end">
+    <div fxLayout="row" fxLayoutAlign="start stretch">
+      <button mat-button (click)="addAccount()"><mat-icon>add</mat-icon> Add</button>
+    </div>
     <div [hidden]="!(clientAccount.account_id > 0)" fxLayout="row" fxLayoutAlign="start stretch"
          style="background-color: tan; border: 3px solid silver;">
       <client-accounts></client-accounts>

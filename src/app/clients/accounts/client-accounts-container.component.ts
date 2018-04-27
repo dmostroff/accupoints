@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material'
 
 import { ClientAccount } from '../client-account';
 import { ClientAccountService } from '../client-account.service';
 import { ClientAccountListComponent } from './client-account-list.component';
 import { ClientAccountsComponent } from './client-accounts.component';
+import { ClientAccountDlgComponent } from './client-account-dlg.component';
 
 @Component({
   selector: 'client-accounts-container',
@@ -13,15 +15,26 @@ import { ClientAccountsComponent } from './client-accounts.component';
 export class ClientAccountsContainerComponent implements OnInit {
 
   clientAccount: ClientAccount;
-  constructor( private clientAccountService: ClientAccountService) {
+  constructor( private accountService: ClientAccountService
+    , public dialog:MatDialog) {
     this.clientAccount = new ClientAccount();
   }
 
   ngOnInit() {
-    this.clientAccountService.clientAccountSubject.subscribe( account => {
+    this.accountService.clientAccountSubject.subscribe( account => {
       console.log( ['subscribe', account]);
       this.clientAccount.set(account);
     })
+  }
+
+  addAccount() {
+    let dialogRef = this.dialog.open(ClientAccountDlgComponent,{ width: '80%', data: this.clientAccount });
+    //
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(['The dialog was closed', result]);
+      this.accountService.clientAccountSubject.next( result);
+    });
+
   }
 
 }

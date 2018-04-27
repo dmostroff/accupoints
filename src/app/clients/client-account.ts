@@ -13,6 +13,7 @@ export class ClientAccount {
   cc_login: string;
   cc_password: string;
   cc_status: string;
+  cc_status_desc: string;
   annual_fee: number;
   credit_limit: number;
   addtional_card: number;
