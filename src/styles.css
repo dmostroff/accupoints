@@ -17,3 +17,15 @@ label {
   font-weight: bold;
   padding-right: 8px;
 }
+
+.idshow {
+  text-align: right;
+  font-size: small;
+  background-color: #827717;
+}
+
+.recorded-on {
+  text-align: right;
+  font-size: small;
+  background-color: #827717;
+}

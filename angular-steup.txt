@@ -1,0 +1,66 @@
+/* angular */
+npm install -g @angular/cli
+# install -g angular-4-data-table --save
+npm install moment --save
+
+ng new ccgui
+cd ccgui
+ng serve
+cd d:\Projects\OstroffEnterprises\ccgui
+
+ng g m app-routing
+ng g c PageNotFound
+/* adm */
+ng g c adm\adm-users --flat
+ng g c adm\login --flat
+ng g s adm\adm-users
+
+/* create clients module */
+ng g m clients
+ng g s clients/clients
+ng g s clients/client-accounts
+ng g c clients/accounts/client-account --flat
+ng g c clients/accounts/client-account-dlg --flat
+ng g c clients/accounts/client-account-list --flat
+ng g c clients/accounts/client-account-person --flat
+ng g c clients/persons/client-address --flat
+ng g c clients/persons/client-address-dlg --flat
+ng g c clients/persons/person-dlg --flat
+ng g c clients/persons/persons --flat
+ng g c clients/persons/persons-list --flat
+
+
+/* cc */
+ng g m cc
+ng g c cc/cards --flat
+ng g c cc/cc-company --flat
+ng g c cc/cc-company-dlg --flat
+ng g s cc/cc-company --flat
+ng g c cc/cc-companycards --flat
+ng g c cc/cc-company-list --flat
+ng g m cc/cc-routing --flat
+
+/* utils */
+ng g s utils/utils 
+ng g p utils/acc-number-mask
+ng g m utils/app-material --flat
+ng g s utils/auth --flat
+ng g p utils/phonefmt
+ng g p utils/zipcode
+
+/* about us */
+ng g c utils/aboutus
+ng g c PageNotFound
+
+cd ccpoints
+npm i ngx-bootstrap --save
+npm i ng2-table --save
+npm i angular4-bootstrap-pagination --save
+npm install --save @angular/material
+npm install --save @angular/cdk
+npm install --save @angular/animations
+npm install --save hammerjs
+npm install --save @angular/flex-layout
+npm install --save angular-crypto-js
+npm install --save moment
+
