@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { ClientAccount } from './../client-account';
 import { ClientAccountService } from './../client-account.service';
 
 @Component({
-  selector: 'client-accounts',
-  templateUrl: './client-accounts.component.html',
-  styleUrls: ['./client-accounts.component.css']
+  selector: 'client-account',
+  templateUrl: './client-account.component.html',
+  styleUrls: ['./client-account.component.css']
 })
-export class ClientAccountsComponent implements OnInit {
-  clientAccount:ClientAccount;
+export class ClientAccountComponent implements OnInit {
+  @Input() clientAccount:ClientAccount;
 
   constructor( private accountService: ClientAccountService) {
     this.clientAccount = new ClientAccount();

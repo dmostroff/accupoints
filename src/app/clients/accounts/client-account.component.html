@@ -1,12 +1,12 @@
 <mat-card *ngIf="clientAccount" class="container" fxLayout="column" fxLayoutAlign="center stretch" tabindex="0" style="background-color: #a7ffeb">
   <mat-card-title-group>
     <mat-card-title fxFlex fxFlexAlign="center">{{clientAccount.name}}</mat-card-title>
-    <mat-card-subtitle fxFlex fxFlexAlign="center">Client</mat-card-subtitle>
+    <mat-card-subtitle fxFlex fxFlexAlign="center">Client Account</mat-card-subtitle>
   </mat-card-title-group>
   <mat-card-content fxFlex="100%" fxFlexAlign="center stretch">
     <div fxLayout="column">
       <div fxFlex>
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px" [hidden]="!(clientAccount.account_id > 0)">
           <div fxFlex><label>Account_id:</label>{{clientAccount.account_id}}</div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">

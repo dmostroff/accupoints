@@ -84,6 +84,7 @@ export class ClientsListComponent implements OnInit {
   }
 
   showPerson(p) {
+    console.log( ["showPerson", p]);
     this.clientsService.getClient(p.client_id);
     this.clientsService.setClientMode('show');
   }

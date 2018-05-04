@@ -6,7 +6,7 @@
     </div>
     <div [hidden]="!(clientAccount.account_id > 0)" fxLayout="row" fxLayoutAlign="start stretch"
          style="background-color: tan; border: 3px solid silver;">
-      <client-accounts></client-accounts>
+      <client-account [clientAccount]="clientAccount"></client-account>
     </div>
   </mat-sidenav>
   <client-account-list></client-account-list>

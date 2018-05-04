@@ -67,10 +67,18 @@ export class ClientAccountDlgComponent {
     ]
   }
 
+  private setDate( onDate) {
+    let aDate = null;
+    if( onDate) {
+      aDate = moment(onDate).format();
+    }
+    return aDate;
+  }
+
   private createForm() {
-    let account_date = moment(this.clientAccount.account_date).format(); // new Date(new Date(this.clientAccount.account_date).toLocaleDateString( "en-US", { timeZone: "America/New_York"}));
-    let open_date = moment(this.clientAccount.open_date).format();
-    let close_date = moment(this.clientAccount.close_date).format();
+    let account_date = this.setDate(this.clientAccount.account_date);
+    let open_date = this.setDate(this.clientAccount.open_date);
+    let close_date = this.setDate(this.clientAccount.close_date);
     console.log( account_date);
     this.clientAccount.account_num = this.accNumberPipe.transform(this.clientAccount.account_num);
 
@@ -194,12 +202,16 @@ export class ClientAccountDlgComponent {
     let account_date = new Date(this.clientAccountForm.value['account_date']);
     let y = account_date.getFullYear() + '-' + (1+account_date.getMonth()) +'-'+account_date.getDate()
     this.clientAccountForm.controls['account_date'].setValue(y, {emitEvent: false});
-    let open_date = new Date(this.clientAccountForm.value['open_date']);
-    y = open_date.getFullYear() + '-' + (1+open_date.getMonth()) +'-'+open_date.getDate()
-    this.clientAccountForm.controls['open_date'].setValue(y, {emitEvent: false});
-    let close_date = new Date(this.clientAccountForm.value['close_date']);
-    y = close_date.getFullYear() + '-' + (1+close_date.getMonth()) +'-'+close_date.getDate()
-    this.clientAccountForm.controls['close_date'].setValue(y, {emitEvent: false});
+    if( this.clientAccountForm.value['open_date']) {
+      let open_date = new Date(this.clientAccountForm.value['open_date']);
+      y = open_date.getFullYear() + '-' + (1+open_date.getMonth()) +'-'+open_date.getDate()
+      this.clientAccountForm.controls['open_date'].setValue(y, {emitEvent: false});
+    }
+    if( this.clientAccountForm.value['close_date']) {
+      let close_date = new Date(this.clientAccountForm.value['close_date']);
+      y = close_date.getFullYear() + '-' + (1 + close_date.getMonth()) + '-' + close_date.getDate()
+      this.clientAccountForm.controls['close_date'].setValue(y, {emitEvent: false});
+    }
     //console.log( [account_date, y, this.clientAccountForm.value['account_date']]);
     //console.log( this.clientAccountForm.value);
     this.clientAccountService.postClientAccount(this.clientAccountForm.value);

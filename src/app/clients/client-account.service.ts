@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
+
+
 import { Config } from './../utils/config';
 import { CcapiResult } from './../utils/ccapiresult';
 import { AuthService } from './../utils/auth.service';
@@ -88,6 +90,12 @@ export class ClientAccountService {
           this.clientAccountListSubject.next(null);
         }
       );
+  }
+
+
+  public newClientAccount() {
+    this.clientAccount = new ClientAccount();
+    this.clientAccountSubject.next(this.clientAccount);
   }
 
   public getClientAccount(account_id) {
