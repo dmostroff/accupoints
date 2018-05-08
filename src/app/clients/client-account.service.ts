@@ -126,9 +126,9 @@ export class ClientAccountService {
       .subscribe(resp => {
           console.log(resp);
           if (0 == resp.res.rc && resp.data) {
-            this.clientAccount.set(resp.data);
-            console.log(["1-postClientAccount", this.clientAccount]);
-            this.clientAccountSubject.next(this.clientAccount);
+            // this.clientAccount = resp.data;
+            console.log(["1-postClientAccount", resp.data]);
+            this.clientAccountSubject.next(resp.data);
           } else {
             console.log(["resdata is null for ", resp.data, input]);
           }

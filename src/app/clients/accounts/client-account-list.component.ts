@@ -20,6 +20,7 @@ import { AccNumberMaskPipe } from '../../utils/acc-number-mask.pipe';
 })
 export class ClientAccountListComponent implements OnInit {
   displayedColumns = ['account_id', 'client_name', 'name', 'card_name', 'account_num', 'recorded_on', 'edit'];
+  highlightedRows = [];
   clientAccount: ClientAccount;
   clientAccountList: ClientAccount[];
   showTable: boolean;
@@ -58,8 +59,14 @@ export class ClientAccountListComponent implements OnInit {
   }
 
   showDetail( rowd) {
+    if ( 0 < this.highlightedRows.length) {
+      this.highlightedRows.pop();
+    }
+
     console.log( ['showDetail', rowd]);
+    this.highlightedRows.push(rowd)
     this.accountService.getClientAccount(rowd.account_id);
+
   }
 
   showClientAccount( clientAccount: ClientAccount) {

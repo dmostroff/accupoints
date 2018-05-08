@@ -15,7 +15,7 @@
                selectable-rows="true"
                multi-selection="false"
                select-on-rowclick="true"
-               clicked-row-callback="showClientAccount(x);"
+               clicked-row-callback="showDetail(row);"
                matSort
     >
       <ng-container cdkColumnDef="account_id">
@@ -26,11 +26,11 @@
       <ng-container cdkColumnDef="client_name">
         <mat-header-cell *cdkHeaderCellDef fxFlex>Client Name</mat-header-cell>
         <!--<mat-cell *cdkCellDef="let row" fxFlex="grow"><a [routerLink]="['/clients/person/'+row.client_id]">{{row.last_name}}</a></mat-cell>-->
-        <mat-cell *cdkCellDef="let row" fxFlex="grow" (click)="showDetail(row)">{{row.last_name}} {{row.first_name}}</mat-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="grow" (xclick)="showDetail(row)">{{row.last_name}} {{row.first_name}}</mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="name">
         <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Name on Card</mat-header-cell>
-        <mat-cell *cdkCellDef="let row" fxFlex="15%" (click)="showDetail(row)">{{row.name}}</mat-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="15%" (xclick)="showDetail(row)">{{row.name}}</mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="card_name">
         <mat-header-cell *cdkHeaderCellDef fxFlex="15%">Card</mat-header-cell>
@@ -51,7 +51,9 @@
         </mat-cell>
       </ng-container>
       <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *cdkRowDef="let row; columns: displayedColumns;" (click)="showDetail(row)"
+        [style.background]="highlightedRows.indexOf(row) != -1 ? 'lightblue' : ''"
+        ></mat-row>
       <!--(click)="getPerson(row)"-->
     </mat-table>
 
