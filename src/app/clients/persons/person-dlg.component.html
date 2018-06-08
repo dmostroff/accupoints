@@ -29,15 +29,22 @@
       </div>
       <div fxLayout="row" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
-          <input matInput type="text" formControlName="dob" placeholder="dob">
-          <mat-error *ngIf="clientPersonForm.hasError('required')">dob is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
-          <input matInput type="text" formControlName="gender" placeholder="gender">
-          <mat-error *ngIf="clientPersonForm.hasError('required')">gender is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+            <input matInput [matDatepicker]="dobpicker" formControlName="dob" placeholder="Date of Birth">
+            <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+            <mat-datepicker #dobpicker></mat-datepicker>
+            <mat-error *ngIf="clientPersonForm.hasError('required')">Date of Birth is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        <mat-radio-group formControlName="gender" placeholder="gender">
+          <mat-radio-button value="M">Male</mat-radio-button>
+          <mat-radio-button value="F">Female</mat-radio-button>
+          <mat-radio-button value="U">Unknown</mat-radio-button>
+        </mat-radio-group>
+          <!--<mat-slide-toggle formControlName="gender" placeholder="gender">-->
+                            <!--(change)="onChange($event)"  [(ngModel)]="device[i]" (click)="onActiveHomeboxP(item.homeboxpackage_id)">-->
+          <!--</mat-slide-toggle>-->
+          <!--<input matInput type="text" formControlName="gender" placeholder="gender">-->
+          <!--<mat-error *ngIf="clientPersonForm.hasError('required')">Gender is <strong>required</strong></mat-error>-->
       </div>
       <div fxLayout="row" fxLayoutGap="15px">
         <mat-form-field class="form-group" fxFlex fxFlexAlign="start center">
