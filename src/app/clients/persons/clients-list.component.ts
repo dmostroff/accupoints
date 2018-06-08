@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription ,  Observable ,  BehaviorSubject } from 'rxjs';
 import { Router } from "@angular/router";
 import {DataSource} from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import {MatPaginator, MatSort, MatButton, MatDialog} from '@angular/material';
 

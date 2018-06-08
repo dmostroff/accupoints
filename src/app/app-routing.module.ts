@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './adm/login.component';
+import { LogoutComponent } from './adm/logout.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ClientsContainerComponent } from './clients/clients-container.component';
 import { ClientAccountsContainerComponent } from './clients/accounts/client-accounts-container.component';
@@ -23,6 +24,7 @@ export const appRoutes: Routes = [
     pathMatch: 'full'
   },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'aboutus', component: AboutusComponent },
 //  { path: 'clients/list', component: ClientsListComponent, outlet: 'person'},
   { path: 'clients', children: [

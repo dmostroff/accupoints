@@ -22,7 +22,7 @@ import { ClientAccountDlgComponent } from './accounts/client-account-dlg.compone
 import { PhonefmtPipe } from './../utils/phonefmt.pipe';
 import { ClientsContainerComponent } from "./clients-container.component";
 import { ClientAccountsContainerComponent } from "./accounts/client-accounts-container.component";
-import { ClientAccountComponent } from './accounts/client-account.component.ts';
+import { ClientAccountComponent } from './accounts/client-account.component';
 
 var MY_COMPONENTS = [
   ClientsContainerComponent

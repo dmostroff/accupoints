@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse, HttpHeaders } from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 import { AdmTags } from './adm-tags';
 import { Config } from './../utils/config';

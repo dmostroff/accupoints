@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse, HttpHeaders } from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 import { Config } from '../utils/config';
 import {AuthService} from './../utils/auth.service';
@@ -13,10 +13,9 @@ export class AdmUsersService {
   public admUserSubject:BehaviorSubject<AdmUser> = new BehaviorSubject<AdmUser>(null);
   public admUserInLoginSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public admUser:AdmUser;
-  private apiBaseUrl: String;
+  private apiBaseUrl:String;
 
-  constructor(
-    private http:HttpClient
+  constructor(private http:HttpClient
     , private authService:AuthService) {
     this.apiBaseUrl = 'admin/users';
     this.admUser = new AdmUser();
@@ -24,7 +23,8 @@ export class AdmUsersService {
     this.admUser.user_name = 'dano';
   }
 
-  public inLogin( bFlag:boolean) {
+  public inLogin(bFlag:boolean) {
+    console.log(['admUserSErvice', bFlag]);
     this.admUserInLoginSubject.next(bFlag);
   }
 
@@ -35,12 +35,12 @@ export class AdmUsersService {
   public login(input) {
     this.authService.validUser = false;
     let myurl = Config.GetUrl(this.apiBaseUrl + '/login');
-    const req = this.http.post<CcapiResult>( myurl, input)
+    const req = this.http.post<CcapiResult>(myurl, input)
       .subscribe(resp => {
           console.log(resp);
           if (0 == resp.res.rc && resp.data) {
             this.admUser.set(resp.data);
-            //  console.log( ["1-login", this.admUser]);
+            console.log(["1-login", this.admUser]);
             this.admUserSubject.next(this.admUser);
             //this.authService.authTokenRCSubject.next(0);
             localStorage.setItem('login', this.admUser.login);
@@ -59,7 +59,7 @@ export class AdmUsersService {
 
   public logout(input) {
     let myurl = Config.GetUrl(this.apiBaseUrl + '/logout');
-    const req = this.http.post<CcapiResult>( myurl, input)
+    const req = this.http.post<CcapiResult>(myurl, input)
       .subscribe(resp => {
           console.log(resp);
           if (0 == resp.res.rc && resp.data) {

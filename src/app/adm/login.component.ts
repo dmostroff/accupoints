@@ -83,12 +83,13 @@ export class LoginComponent implements OnInit {
     this.bInit = true;
     console.log( ['ngOnInit', this.bInit]);
     this.init();
+    // I'm contacting you because I am looking for some new opportuniies
+    this.admUsersService.inLogin(true);
     this.bInit = false;
   }
 
   private init() {
     console.log( ['login on init', this.bInit]);
-    this.admUsersService.inLogin(true);
     this.admUsersService.admUserSubject.subscribe(result => {
       if (result && result.user_id > 0) {
         this.bLoginError = false;
@@ -109,6 +110,10 @@ export class LoginComponent implements OnInit {
         }
         this.admUsersService.inLogin(true);
       }
+    });
+
+    this.admUsersService.admUserInLoginSubject.subscribe( bInLogin => {
+      console.log(['login', bInLogin]);
     });
   }
 

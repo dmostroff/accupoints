@@ -7,18 +7,18 @@
 <mat-toolbar color="primary">
   <nav>
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end end" fxLayoutGap="90px">
-      <div fxFlex fxFlexAlign="start">Ostroff Enterprises{{isValidUser}} || {{inLogin}} {{!inLogin || isValidUser}} {{!(inLogin || isValidUser)}}</div>
+      <div fxFlex fxFlexAlign="start">Ostroff Enterprises [ isValidUser: {{isValidUser}}; inLogin: {{inLogin}}; {{!(inLogin || isValidUser)}}; {{(inLogin || !isValidUser)}} ]</div>
       <div fxFlex fxFlexFill></div>
       <div fxFlex fxFlexOffset="150px">
-        <div [hidden]="isValidUser || inLogin">
+        <div [hidden]="(isValidUser || inLogin)">
           <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper">Login</a>
         </div>
-        <div *ngIf="isValidUser && !inLogin" class="mat-h4" style="background-color: #e64a19">
+        <div [hidden]="(inLogin || !isValidUser)" class="mat-h4" style="background-color: #e64a19">
           Welcome <span class="caption">{{admUser.user_name}}</span>
         </div>
       </div>
-      <div fxFlexAlign="end end" [hidden]="inLogin || !isValidUser">
-        <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper" (click)="logout()">Logout2a</a>
+      <div fxFlexAlign="end end" [hidden]="(inLogin || !isValidUser)">
+        <a routerLink="login" routerLinkActive="active" class="mat-button-wrapper" (click)="logout()">Logout</a>
         <!--<a routerLink="aboutus" routerLinkActive="active" >About</a>-->
       </div>
       <div fxFlexAlign="end end">
@@ -51,9 +51,9 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
 <div fxFlex class="mainPanel">
   <router-outlet></router-outlet>
-  <div [hidden]="isValidUser || inLogin">
-    <app-login ></app-login>
-  </div>
+  <!--<div [hidden]="isValidUser || inLogin">-->
+    <!--<app-login ></app-login>-->
+  <!--</div>-->
 </div>
 </div>
 

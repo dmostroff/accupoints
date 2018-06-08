@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { AppMaterialModule } from './../utils/app-material.module';
+import { UtilModule } from './../utils/util.module';
 
 import { CcCompanyService } from './cc-company.service';
 import { CcCompanyListComponent } from './cc-company-list.component';
@@ -13,7 +14,7 @@ import { CcCompanyComponent } from './cc-company.component';
 //import { CcCardComponent } from './cc-card.component';
 import { CcCompanycardsComponent } from './cc-companycards.component';
 import { CcCompanyDlgComponent } from './cc-company-dlg.component';
-import {PhonefmtPipe} from "../utils/phonefmt.pipe";
+import { PhonefmtPipe } from "../utils/phonefmt.pipe";
 
 const componentList = [
   CcCompanyListComponent
@@ -31,7 +32,8 @@ const componentList = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AppMaterialModule
+    AppMaterialModule,
+    UtilModule
     //CcRoutingModule
   ],
   entryComponents: [CcCompanyDlgComponent],

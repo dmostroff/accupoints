@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material'
 import { ClientAccount } from '../client-account';
 import { ClientAccountService } from '../client-account.service';
 import { ClientAccountListComponent } from './client-account-list.component';
-import { ClientAccountComponent } from './client-account.component.ts';
+import { ClientAccountComponent } from './client-account.component';
 import { ClientAccountDlgComponent } from './client-account-dlg.component';
 
 @Component({

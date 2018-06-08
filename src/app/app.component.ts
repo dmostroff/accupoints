@@ -34,6 +34,7 @@ export class AppComponent implements OnInit  {
     this.validToken = false;
     this.admUser = new AdmUser();
     this.isValidUser = false;
+    this.inLogin = false;
     this.navLinks = [
       { path: "clients/accounts", label: "Accounts", active: true, id: 'clientaccounts' }
       , { path: "clients/list", label: "Clients", active: true, id: 'clientlist'}
@@ -58,6 +59,7 @@ export class AppComponent implements OnInit  {
     });
 
     this.admUsersService.admUserSubject.subscribe( admUser => {
+      this.isValidUser = (admUser && 0 < admUser.user_id) ? true : false;
       this.admUser.set( admUser);
       console.log(this.admUser);
     });
@@ -68,6 +70,7 @@ export class AppComponent implements OnInit  {
   }
 
   logout() {
+    console.log( ['logout', this.admUser, 'service', this.admUsersService.admUser]);
     this.admUsersService.logout(this.admUser);
   }
 

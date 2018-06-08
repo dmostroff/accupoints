@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { AdmUsersComponent } from './adm/adm-users.component';
 import { LoginComponent } from './adm/login.component';
+import { LogoutComponent } from './adm/logout.component';
 
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -51,6 +52,7 @@ var MY_COMPONENTS = [
   AboutusComponent,
   AdmUsersComponent,
   LoginComponent,
+  LogoutComponent,
   PageNotFoundComponent,
 ];
 
@@ -63,6 +65,7 @@ var MY_COMPONENTS = [
   ],
   exports: [
     AppMaterialModule
+    , UtilModule
   ],
   providers: [AuthService, AdmUsersService, UtilsService, AdmTagsService,
     ,{

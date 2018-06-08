@@ -3,13 +3,14 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {MatPaginator, MatSort, MatButton} from '@angular/material';
 
 import {DataSource} from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+// import { Observable ,  BehaviorSubject } from 'rxjs';
 
 
 import { ClientAccount } from '../client-account';
 import { ClientAccountService } from '../client-account.service';
 import { ClientAccountDlgComponent } from './client-account-dlg.component';
+
+import { AdmUsersService } from '../../adm/adm-users.service';
 
 import { AccNumberMaskPipe } from '../../utils/acc-number-mask.pipe';
 
@@ -30,8 +31,10 @@ export class ClientAccountListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(public dialog:MatDialog
-    ,private accountService: ClientAccountService
-    ,private accountNumMaskPipe: AccNumberMaskPipe ) {
+    , private accountService: ClientAccountService
+    , private accountNumMaskPipe: AccNumberMaskPipe
+  //  , private admUsersService: AdmUsersService
+  ) {
     this.clientAccount = new ClientAccount();
   }
 
@@ -44,6 +47,7 @@ export class ClientAccountListComponent implements OnInit {
     });
     this.accountService.getClientAccounts();
     this.accountListInit();
+//    console.log(['ngOnInit', this.admUsersService.admUser]);
   }
 
   private accountListInit() {
