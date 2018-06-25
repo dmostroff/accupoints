@@ -2,14 +2,15 @@ import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse, HttpHeaders } from '@angular/common/http';
 import {Observable, Subject, BehaviorSubject} from 'rxjs';
 
-
-
 import { Config } from './../utils/config';
 import { CcapiResult } from './../utils/ccapiresult';
 import { AuthService } from './../utils/auth.service';
 import { ClientAccount } from './client-account';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
+
 export class ClientAccountService {
   apiUrl:string;
 

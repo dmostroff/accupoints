@@ -2,9 +2,9 @@
   <div fxFlex="15%" class="left-main-panel">
     <h2>c{{title}}</h2>
     <nav>
-      <div *ngIf="ccCompanyList" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-        <div fxFlex fxFlexAlign="start" *ngFor="let company of ccCompanyList; let ii = index">
-          <a (click)="onClick(company.cc_company_id)">{{company.cc_name}}</a>
+      <div *ngIf="ccActionsList" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+        <div fxFlex fxFlexAlign="start" *ngFor="let ccaction of ccActionsList; let ii = index">
+          <a (click)="onClick(ccaction.cc_actions_id)">{{ccaction.cc_name}}</a>
         </div>
       </div>
       <div fxLayout="row" fxLayoutAlign="start start">
@@ -13,19 +13,18 @@
 
     </nav>
   </div>
-  <!--*ngIf="ccCompany && ccCompany.cc_company_id > 0"-->
+  <!--*ngIf="ccCompany && ccCompany.cc_actions_id > 0"-->
   <div fxFlex fxFlexAlign="start start" style="border: 10px solid darkkhaki;">
     <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
       <div fxFlex="stretch" >
-        <cc-company [ccCompany]="ccCompany"></cc-company>
+        <cc-actions [ccAction]="ccAction"></cc-actions>
       </div>
       <!--&lt;!&ndash;<div fxFlex style="border: 10px solid darkorange;">&ndash;&gt;-->
       <!--<cc_card></cc_card>-->
       <!--&lt;!&ndash;</div>&ndash;&gt;-->
       <!--&lt;!&ndash;<div fxFlex>&ndash;&gt;-->
-      <!--<cc-companycards [ccCompany]="ccCompany"></cc-companycards>-->
+      <!--<cc-actionscards [ccCompany]="ccCompany"></cc-actionscards>-->
       <!--</div>-->
     </div>
   </div>
 </div>
-

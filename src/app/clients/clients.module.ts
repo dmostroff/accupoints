@@ -9,6 +9,7 @@ import { TokenInterceptor } from '../utils/token-interceptor';
 
 import { ClientsService } from './clients.service';
 import { ClientAccountService } from './client-account.service';
+import { CcActionsService } from './../cc/cc-actions.service.ts';
 import { UtilsService } from './../utils/utils.service';
 
 import { ClientsListComponent } from './persons/clients-list.component';
@@ -47,6 +48,6 @@ var MY_COMPONENTS = [
   ],
   declarations: [ MY_COMPONENTS ],
   entryComponents: [PersonDlgComponent, ClientAccountDlgComponent],
-  providers: [ ClientsService, ClientAccountService, PhonefmtPipe ]
+  providers: [ ClientsService, ClientAccountService, CcActionsService, PhonefmtPipe ]
 })
 export class ClientsModule { }

@@ -1,0 +1,41 @@
+<mat-card *ngIf="ccTransactions" class="container" fxLayout="column" fxLayoutAlign="center stretch" tabindex="0" style="background-color: #a7ffeb">
+  <mat-card-title-group>
+    <mat-card-title fxFlex fxFlexAlign="center">{{ccTransactions}}</mat-card-title>
+    <mat-card-subtitle fxFlex fxFlexAlign="center">Cc Transactions</mat-card-subtitle>
+  </mat-card-title-group>
+
+  <mat-card-content fxFlex="100%" fxFlexAlign="center stretch">
+    <div fxLayout="column">
+      <div fxFlex>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>cctrans id:</label>{{ccTransactions.cctrans_id}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>account id:</label>{{ccTransactions.account_id}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>transaction date:</label>{{ccTransactions.transaction_date}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>transaction type:</label>{{ccTransactions.transaction_type}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>transaction status:</label>{{ccTransactions.transaction_status}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>cedit:</label>{{ccTransactions.cedit}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>debit:</label>{{ccTransactions.debit}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>recorded on:</label>{{ccTransactions.recorded_on}}</div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+    <button mat-raised-button (click)="openDialog()"><mat-icon>edit</mat-icon> Edit</button>
+  </mat-card-actions>
+  <mat-card-footer fxFlexAlign="center">Cc Transactions</mat-card-footer>
+</mat-card>

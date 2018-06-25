@@ -14,6 +14,8 @@ import { CcCompanyComponent } from './cc-company.component';
 //import { CcCardComponent } from './cc-card.component';
 import { CcCompanycardsComponent } from './cc-companycards.component';
 import { CcCompanyDlgComponent } from './cc-company-dlg.component';
+import { CcActionsComponent } from './cc-actions.component';
+
 import { PhonefmtPipe } from "../utils/phonefmt.pipe";
 
 const componentList = [
@@ -21,6 +23,7 @@ const componentList = [
   , CcCompanyComponent
   , CcCompanyDlgComponent
   , CcCompanycardsComponent
+  , CcActionsComponent
   //, CcCardComponent
 ];
 

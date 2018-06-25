@@ -1,0 +1,42 @@
+<mat-card *ngIf="ccAction" class="container" fxLayout="column" fxLayoutAlign="center stretch" tabindex="0" style="background-color: #a7ffeb">
+  <mat-card-title-group>
+    <mat-card-title fxFlex fxFlexAlign="center">{{ccAction.ccaction}}</mat-card-title>
+    <mat-card-subtitle fxFlex fxFlexAlign="center">Cc Action</mat-card-subtitle>
+  </mat-card-title-group>
+
+  <mat-card-content fxFlex="100%" fxFlexAlign="center stretch">
+    <div fxLayout="column">
+      <div fxFlex>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>ccaction id:</label>{{ccAction.ccaction_id}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>account id:</label>{{ccAction.account_id}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>ccaction:</label>{{ccAction.ccaction}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>action type:</label>{{ccAction.action_type}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>action status:</label>{{ccAction.action_status}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>due date:</label>{{ccAction.due_date}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>details:</label>{{ccAction.details}}</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div fxFlex><label>recorded on:</label>{{ccAction.recorded_on}}</div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+    <button mat-raised-button (click)="openDialog()"><mat-icon>edit</mat-icon> Edit</button>
+  </mat-card-actions>
+  <mat-card-footer fxFlexAlign="center">Cc Action</mat-card-footer>
+</mat-card>
