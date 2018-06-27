@@ -26,7 +26,7 @@ export class ClientAccountService {
 
   constructor(private http:HttpClient
     , private authService:AuthService) {
-    this.apiUrl = 'http://ccapi.com//client/accounts';
+    this.apiUrl = 'account';
     this.clientAccount = new ClientAccount();
     this.clientAccountsPerson = <ClientAccount[]>[];
     this.clientAccountList = <ClientAccount[]>[];
@@ -34,7 +34,7 @@ export class ClientAccountService {
 
 
   public getClientAccounts() {
-    let url = Config.GetUrl('client/accounts');
+    let url = Config.GetUrl(this.apiUrl);
     return this.http.get<CcapiResult>(url
       , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
       )
@@ -72,7 +72,7 @@ export class ClientAccountService {
   }
 
   public getClientAccountsPerson(client_id) {
-    let url = Config.GetUrl('client/accounts/person/' + client_id);
+    let url = Config.GetUrl(this.apiUrl+'/person/' + client_id);
     return this.http.get<CcapiResult>(url
       , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
       )
@@ -98,7 +98,7 @@ export class ClientAccountService {
   }
 
   public getClientAccount(account_id) {
-    let url = Config.GetUrl('client/accounts/' + account_id);
+    let url = Config.GetUrl(this.apiUrl+'/' + account_id);
     return this.http.get<CcapiResult>(url
       , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
       )
@@ -118,7 +118,7 @@ export class ClientAccountService {
 
 
   public postClientAccount(input) {
-    let url = Config.GetUrl('client/accounts');
+    let url = Config.GetUrl(this.apiUrl);
     return this.http.post<CcapiResult>(url, input
       , {headers: new HttpHeaders().set('Authorization', this.authService.token)}
       )
@@ -139,7 +139,7 @@ export class ClientAccountService {
   }
 
   public deleteClientAccount(input) {
-    let url = Config.GetUrl('client/accounts');
+    let url = Config.GetUrl(this.apiUrl+'/'+input);
     return this.http.delete<CcapiResult>(url, input)
       .subscribe(resp => {
           console.log(resp);

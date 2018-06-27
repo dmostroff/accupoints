@@ -16,6 +16,8 @@ import { ClientsModule } from './clients/clients.module';
 import { CcCompanyListComponent } from './cc/cc-company-list.component';
 import { ClientAccountListComponent } from './clients/accounts/client-account-list.component';
 import { ClientAccountComponent } from './clients/accounts/client-account.component';
+import { CcActionsComponent } from './cc/cc-actions.component';
+import { CcTransactionsComponent } from './clients/accounts/cc-transactions.component';
 
 export const appRoutes: Routes = [
   {
@@ -31,6 +33,7 @@ export const appRoutes: Routes = [
       { path: 'list', component: ClientsContainerComponent}
       , { path: 'accounts', component: ClientAccountsContainerComponent }
       , { path: 'accounts/:acount_id', component: ClientAccountComponent }
+      , { path: 'actions', component: CcActionsComponent }
       //,  { path: 'persons', component: ClientsContaineronent, children: [
     //        { path: ':client_id', component: PersonsComponent, outlet: "person" },
     //        { path: ':client_id/address/:address_id', component: ClientAddressComponent }

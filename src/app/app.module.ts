@@ -30,6 +30,7 @@ import { AuthService } from './utils/auth.service';
 import { AdmUsersService } from './adm/adm-users.service';
 import { AdmTagsService } from './adm/adm-tags.service';
 import { UtilsService } from './utils/utils.service';
+import { CcActionsListComponent } from './cc/cc-actions-list.component';
 
 var MY_MODULES = [
   BrowserModule
@@ -58,7 +59,8 @@ var MY_COMPONENTS = [
 
 @NgModule({
   declarations: [
-    MY_COMPONENTS
+    MY_COMPONENTS,
+    CcActionsListComponent,
   ],
   imports: [
     MY_MODULES
